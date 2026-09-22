@@ -75,13 +75,6 @@ Additional examples:
 .\InstallModule.ps1 -FullPath "$HOME\Documents\PowerShell\Modules\Jev"
 ```
 
-`PublishToGallery.ps1` validates the manifest and publishes the module when
-you are ready. It reads the API key from `$env:NuGetApiKey`:
-
-```powershell
-.\PublishToGallery.ps1
-```
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
