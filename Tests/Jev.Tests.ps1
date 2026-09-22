@@ -16,6 +16,13 @@ Describe 'Jev module' {
         $commands.Count | Should -Be 2
     }
 
+    It 'uses State as the canonical input parameter with a legacy alias' {
+        $parameter = (Get-Command Invoke-Jev).Parameters['State']
+
+        $parameter | Should -Not -BeNullOrEmpty
+        @($parameter.Aliases) | Should -Contain 'InputObject'
+    }
+
     It 'creates a Noul question' {
         $question = New-JevQuestion -Name churn -Type Noul -Instructions 'Is this an active churn threat?'
 
@@ -51,7 +58,7 @@ Describe 'Jev module' {
         )
 
         {
-            Invoke-Jev -InputObject 'A test message.' -Question $questions -Mock
+            Invoke-Jev -State 'A test message.' -Question $questions -Mock
         } | Should -Throw '*Duplicate Jev question name*'
     }
 
@@ -66,7 +73,7 @@ Describe 'Jev module' {
             New-JevQuestion -Name urgency -Type Score -Instructions 'How urgent is this?' -Criteria @('Can wait', 'This week', 'Today')
         )
 
-        $result = Invoke-Jev -InputObject 'The customer is blocked by an outage and may cancel.' -Question $questions -Mock
+        $result = Invoke-Jev -State 'The customer is blocked by an outage and may cancel.' -Question $questions -Mock
 
         $result.model | Should -Be 'jev-latest'
         @($result.answers.Keys).Count | Should -Be 3

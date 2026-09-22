@@ -46,7 +46,7 @@ $questions = @(
 
 $results = foreach ($line in $LogLine) {
     $response = Invoke-Jev `
-        -InputObject @{ log_line = $line } `
+        -State @{ log_line = $line } `
         -Question $questions
 
     $security = $response.answers.critical_security_risk

@@ -34,7 +34,7 @@ $questions = @(
         -Criteria @('Can wait', 'This week', 'Today')
 )
 
-$result = Invoke-Jev -InputObject $feedback -Question $questions
+$result = Invoke-Jev -State $feedback -Question $questions
 
 # Keep the raw Jev response in $result. This view makes the message and the
 # corresponding decisions easy to read together.

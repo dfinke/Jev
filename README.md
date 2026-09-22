@@ -33,7 +33,7 @@ $questions = @(
 )
 
 $feedback = 'The customer says the latest invoice is incorrect and may cancel unless billing fixes it.'
-$decision = Invoke-Jev -InputObject $feedback -Question $questions
+$decision = Invoke-Jev -State $feedback -Question $questions
 ```
 
 See [`Examples/QuickStart.ps1`](Examples/QuickStart.ps1) for a complete API example. It

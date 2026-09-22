@@ -14,3 +14,7 @@ First preview release of the Jev PowerShell module.
 - Retry, timeout, and mock support for the API client and its tests.
 - QuickStart, refund triage, security incident, and semantic log triage examples.
 - Pester tests, an MIT license, and helper scripts for local installation and Gallery publication.
+
+### Changed
+
+- `Invoke-Jev` documents `-State` as the input parameter, matching Jev's request payload. `-InputObject` remains available as a compatibility alias.

@@ -6,12 +6,17 @@
     The Question definitions use the same type, instructions, and criteria
     names as the Jev JSON payload. Use Mock while developing without an API
     key.
+
+.PARAMETER State
+    The input context Jev evaluates. This can be a string, object, or array.
+    It maps to the state field in the Jev request payload.
 #>
 function Invoke-Jev {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory, ValueFromPipeline, Position = 0)]
-        [object] $InputObject,
+        [Alias('InputObject')]
+        [object] $State,
 
         [Parameter(Mandatory)]
         [object[]] $Question,
@@ -59,7 +64,7 @@ function Invoke-Jev {
         }
 
         $invokeParameters = @{
-            State        = $InputObject
+            State        = $State
             Questions    = $questionsByName
             Model        = $Model
             Endpoint     = $Endpoint

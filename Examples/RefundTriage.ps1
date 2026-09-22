@@ -38,7 +38,7 @@ $questions = @(
         )
 )
 
-$response = Invoke-Jev -InputObject $state -Question $questions
+$response = Invoke-Jev -State $state -Question $questions
 
 'Input state:'
 $state | ConvertTo-Json -Depth 10
