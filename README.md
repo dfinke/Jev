@@ -32,6 +32,7 @@ See [`Examples/Basic.ps1`](Examples/Basic.ps1) for a complete offline example.
 
 - `Public/` contains the commands exported to module users.
 - `Private/` contains implementation helpers and the Jev API client.
+- `Tests/` contains the Pester test suite.
 
 ## License
 

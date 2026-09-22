@@ -50,12 +50,15 @@ function New-JevQuestion {
         throw "Noul question '$Name' does not accept -Level or -Choice."
     }
 
+    $normalizedLevel = if ($null -eq $Level) { @() } else { @($Level) }
+    $normalizedChoice = if ($null -eq $Choice) { @() } else { @($Choice) }
+
     [pscustomobject] [ordered] @{
         Name          = $Name
         Type          = $Type
         Instructions  = $Prompt
-        Level         = @($Level)
-        Choice        = @($Choice)
+        Level         = $normalizedLevel
+        Choice        = $normalizedChoice
         TrueCriteria  = $TrueCriteria
         FalseCriteria = $FalseCriteria
     }

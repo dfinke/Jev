@@ -7,6 +7,7 @@ TestResults/
 TestOutput/
 coverage/
 artifacts/
+testResults.xml
 dist/
 
 # Local tooling and editor files
