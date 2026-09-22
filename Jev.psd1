@@ -5,7 +5,7 @@
     Author            = 'Jev contributors'
     CompanyName       = ''
     Copyright         = '(c) 2026 Jev contributors'
-    Description       = 'Turn unstructured input into consistent, structured decisions from PowerShell.'
+    Description       = 'Jev brings TypeSafe AI structured decisions to PowerShell: ask typed questions about messy input and get consistent, actionable answers.'
     PowerShellVersion = '7.0'
     FunctionsToExport = @('New-JevQuestion', 'Invoke-Jev')
     CmdletsToExport   = @()
