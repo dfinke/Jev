@@ -18,13 +18,13 @@ Describe 'Jev module' {
     }
 
     It 'creates a Noul question' {
-        $question = New-JevQuestion -Name churn -Type Noul -Prompt 'Is this an active churn threat?'
+        $question = New-JevQuestion -Name churn -Type Noul -Instructions 'Is this an active churn threat?'
 
         $question.Name | Should -Be 'churn'
         $question.Type | Should -Be 'Noul'
         $question.Instructions | Should -Be 'Is this an active churn threat?'
-        @($question.Level).Count | Should -Be 0
-        @($question.Choice).Count | Should -Be 0
+        $null -eq $question.Criteria | Should -BeTrue
+        $question.PSObject.Properties.Name | Should -Be @('Name', 'Type', 'Instructions', 'Criteria')
     }
 
     It 'creates a Choice question from named choices' {
@@ -32,23 +32,23 @@ Describe 'Jev module' {
             New-JevChoice -Name support -Description 'Route to support'
             New-JevChoice -Name sales -Description 'Route to sales'
         )
-        $question = New-JevQuestion -Name route -Type Choice -Prompt 'Which team should handle this?' -Choice $choices
+        $question = New-JevQuestion -Name route -Type Choice -Instructions 'Which team should handle this?' -Criteria $choices
 
         $question.Type | Should -Be 'Choice'
-        @($question.Choice).Count | Should -Be 2
-        $question.Choice[0].Name | Should -Be 'support'
+        $question.Criteria.Count | Should -Be 2
+        $question.Criteria['support'] | Should -Be 'Route to support'
     }
 
     It 'rejects a Score question with fewer than two levels' {
         {
-            New-JevQuestion -Name urgency -Type Score -Prompt 'How urgent is this?' -Level @('Today')
+            New-JevQuestion -Name urgency -Type Score -Instructions 'How urgent is this?' -Criteria @('Today')
         } | Should -Throw '*requires at least two*'
     }
 
     It 'rejects duplicate question names' {
         $questions = @(
-            New-JevQuestion -Name status -Type Noul -Prompt 'Is this active?'
-            New-JevQuestion -Name status -Type Noul -Prompt 'Is this urgent?'
+            New-JevQuestion -Name status -Type Noul -Instructions 'Is this active?'
+            New-JevQuestion -Name status -Type Noul -Instructions 'Is this urgent?'
         )
 
         {
@@ -62,9 +62,9 @@ Describe 'Jev module' {
             New-JevChoice -Name sales -Description 'Route to sales'
         )
         $questions = @(
-            New-JevQuestion -Name churn -Type Noul -Prompt 'Is this an active churn threat?'
-            New-JevQuestion -Name route -Type Choice -Prompt 'Which team should handle this?' -Choice $choices
-            New-JevQuestion -Name urgency -Type Score -Prompt 'How urgent is this?' -Level @('Can wait', 'This week', 'Today')
+            New-JevQuestion -Name churn -Type Noul -Instructions 'Is this an active churn threat?'
+            New-JevQuestion -Name route -Type Choice -Instructions 'Which team should handle this?' -Criteria $choices
+            New-JevQuestion -Name urgency -Type Score -Instructions 'How urgent is this?' -Criteria @('Can wait', 'This week', 'Today')
         )
 
         $result = Invoke-Jev -InputObject 'The customer is blocked by an outage and may cancel.' -Question $questions -Mock

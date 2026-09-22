@@ -1,3 +1,12 @@
+<##
+.SYNOPSIS
+    Evaluates one state value against named Jev questions.
+
+.DESCRIPTION
+    The Question definitions use the same type, instructions, and criteria
+    names as the Jev JSON payload. Use Mock while developing without an API
+    key.
+#>
 function Invoke-Jev {
     [CmdletBinding()]
     param(
@@ -36,46 +45,14 @@ function Invoke-Jev {
                 throw "Duplicate Jev question name '$questionName'. Reset `$questions or remove the existing question before adding it."
             }
 
-            $wireQuestion = @{
-                type         = [string] $questionDefinition.Type
+            $wireQuestion = [ordered]@{
+                type         = ([string] $questionDefinition.Type).ToLowerInvariant()
                 instructions = $questionDefinition.Instructions
             }
 
-            switch ($wireQuestion.type) {
-                'Choice' {
-                    $criteria = @{}
-                    foreach ($choice in @($questionDefinition.Choice)) {
-                        if ($null -eq $choice.Name -or $criteria.Contains([string] $choice.Name)) {
-                            throw "Choice question '$questionName' has a duplicate or empty choice name."
-                        }
-                        $criteria[[string] $choice.Name] = $choice.Description
-                    }
-                    $wireQuestion = @{
-                        type         = [string] $questionDefinition.Type
-                        instructions = $questionDefinition.Instructions
-                        criteria     = $criteria
-                    }
-                }
-                'Score' {
-                    $wireQuestion = @{
-                        type         = [string] $questionDefinition.Type
-                        instructions = $questionDefinition.Instructions
-                        criteria     = @($questionDefinition.Level)
-                    }
-                }
-                'Noul' {
-                    if ($questionDefinition.PSObject.Properties['TrueCriteria'] -and $null -ne $questionDefinition.TrueCriteria -or
-                        $questionDefinition.PSObject.Properties['FalseCriteria'] -and $null -ne $questionDefinition.FalseCriteria) {
-                        $wireQuestion = @{
-                            type         = [string] $questionDefinition.Type
-                            instructions = $questionDefinition.Instructions
-                            criteria     = @{
-                                true  = $questionDefinition.TrueCriteria
-                                false = $questionDefinition.FalseCriteria
-                            }
-                        }
-                    }
-                }
+            $criteriaProperty = $questionDefinition.PSObject.Properties['Criteria']
+            if ($null -ne $criteriaProperty -and $null -ne $questionDefinition.Criteria) {
+                $wireQuestion['criteria'] = $questionDefinition.Criteria
             }
 
             $questionsByName.Add($questionName, [hashtable] $wireQuestion)

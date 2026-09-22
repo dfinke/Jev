@@ -1,3 +1,11 @@
+<##
+.SYNOPSIS
+    Creates a named choice that can be supplied as Choice criteria.
+
+.DESCRIPTION
+    New-JevQuestion converts these convenience objects into the JSON
+    criteria dictionary used by a Choice question.
+#>
 function New-JevChoice {
     [CmdletBinding()]
     param(

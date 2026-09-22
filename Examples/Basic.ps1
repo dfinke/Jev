@@ -10,13 +10,13 @@ $questions = @(
     New-JevQuestion `
         -Name churn `
         -Type Noul `
-        -Prompt 'Is this an active churn threat?'
+        -Instructions 'Is this an active churn threat?'
 
     New-JevQuestion `
         -Name urgency `
         -Type Score `
-        -Prompt 'How urgent is this?' `
-        -Level @('Can wait', 'This week', 'Today')
+        -Instructions 'How urgent is this?' `
+        -Criteria @('Can wait', 'This week', 'Today')
 )
 
 Invoke-Jev -InputObject $feedback -Question $questions -Mock

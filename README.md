@@ -8,6 +8,10 @@ Jev asks typed questions—yes/no, choice, and score—and returns consistent, s
 
 This repository contains the PowerShell module and is being prepared for publication to the PowerShell Gallery.
 
+Question definitions use the same names as the Jev payload: `Type` maps to
+`type`, `Instructions` maps to `instructions`, and `Criteria` maps to
+`criteria`. `Name` becomes the key that identifies the answer.
+
 ## Current status
 
 Early development. The public wrapper is taking shape while the decision engine and module packaging are being refined.
@@ -18,9 +22,9 @@ Early development. The public wrapper is taking shape while the decision engine 
 Import-Module Jev
 
 $questions = @(
-    New-JevQuestion -Name churn -Type Noul -Prompt 'Is this an active churn threat?'
-    New-JevQuestion -Name urgency -Type Score -Prompt 'How urgent is this?' `
-        -Level @('Can wait', 'This week', 'Today')
+    New-JevQuestion -Name churn -Type Noul -Instructions 'Is this an active churn threat?'
+    New-JevQuestion -Name urgency -Type Score -Instructions 'How urgent is this?' `
+        -Criteria @('Can wait', 'This week', 'Today')
 )
 
 $decision = Invoke-Jev -InputObject $feedback -Question $questions
