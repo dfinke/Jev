@@ -13,8 +13,11 @@
     AliasesToExport   = @()
     PrivateData       = @{
         PSData = @{
-            Tags       = @('PowerShell', 'Decisions', 'AI', 'Questions', 'Automation')
-            ProjectUri = 'https://github.com/dfinke/Jev'
+            Tags         = @('PowerShell', 'Decisions', 'AI', 'Questions', 'Automation', 'TypeSafe', 'Jev')
+            ProjectUri   = 'https://github.com/dfinke/Jev'
+            RepositoryUri = 'https://github.com/dfinke/Jev'
+            LicenseUri   = 'https://github.com/dfinke/Jev/blob/main/LICENSE'
+            ReleaseNotes = 'Initial preview release of the Jev PowerShell module.'
         }
     }
 }

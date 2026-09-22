@@ -45,6 +45,22 @@ next to each decision. Set `TYPESAFE_API_KEY` before running it.
 - `Private/` contains implementation helpers and the Jev API client.
 - `Tests/` contains the Pester test suite.
 
+## Local scripts
+
+`InstallModule.ps1` copies the module into a PowerShell module directory with
+`robocopy`:
+
+```powershell
+.\InstallModule.ps1 -FullPath "$HOME\Documents\PowerShell\Modules\Jev"
+```
+
+`PublishToGallery.ps1` validates the manifest and publishes the module when
+you are ready:
+
+```powershell
+.\PublishToGallery.ps1 -NuGetApiKey $apiKey
+```
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
