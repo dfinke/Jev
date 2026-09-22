@@ -10,7 +10,20 @@ $questions = @(
     New-JevQuestion `
         -Name churn `
         -Type Noul `
-        -Instructions 'Is this an active churn threat?'
+        -Instructions 'Is this an active churn threat?' `
+        -Criteria @{ `
+            true = 'The customer may leave or cancel.'
+            false = 'The customer is stable and engaged.'
+        }
+
+    New-JevQuestion `
+        -Name route `
+        -Type Choice `
+        -Instructions 'Which team should handle this?' `
+        -Criteria @{ `
+            support = 'The issue needs technical support.'
+            sales = 'The issue concerns pricing or renewal.'
+        }
 
     New-JevQuestion `
         -Name urgency `

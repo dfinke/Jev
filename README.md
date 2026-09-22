@@ -22,7 +22,12 @@ Early development. The public wrapper is taking shape while the decision engine 
 Import-Module Jev
 
 $questions = @(
-    New-JevQuestion -Name churn -Type Noul -Instructions 'Is this an active churn threat?'
+    New-JevQuestion -Name churn -Type Noul `
+        -Instructions 'Is this an active churn threat?' `
+        -Criteria @{ true = 'The customer may leave.'; false = 'The customer is stable.' }
+    New-JevQuestion -Name route -Type Choice `
+        -Instructions 'Which team should handle this?' `
+        -Criteria @{ support = 'Technical issue'; sales = 'Pricing or renewal issue' }
     New-JevQuestion -Name urgency -Type Score -Instructions 'How urgent is this?' `
         -Criteria @('Can wait', 'This week', 'Today')
 )
