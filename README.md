@@ -39,6 +39,11 @@ See [`Examples/QuickStart.ps1`](Examples/QuickStart.ps1) for a complete API exam
 keeps the raw response and builds a readable summary that puts the message
 next to each decision. Set `TYPESAFE_API_KEY` before running it.
 
+Additional examples:
+
+- [`Examples/RefundTriage.ps1`](Examples/RefundTriage.ps1) follows TypeSafe's refund request example.
+- [`Examples/SecurityIncidentTriage.ps1`](Examples/SecurityIncidentTriage.ps1) turns a security alert and its context into a response choice.
+
 ## Module layout
 
 - `Public/` contains the commands exported to module users.
