@@ -51,10 +51,21 @@ $results = foreach ($line in $LogLine) {
 
     $security = $response.answers.critical_security_risk
     $cause = $response.answers.root_cause
+    $criticalRisk = [math]::Round([double] $security.noul, 3)
+    $emoji = if ($criticalRisk -ge 0.8) {
+        '🔴'
+    }
+    elseif ($criticalRisk -ge 0.5) {
+        '🟠'
+    }
+    else {
+        '🟢'
+    }
 
     [pscustomobject]@{
+        Emoji              = $emoji
         LogLine            = $line
-        CriticalRisk       = [math]::Round([double] $security.noul, 3)
+        CriticalRisk       = $criticalRisk
         RootCause          = [string] $cause.choice
         RootCauseConfidence = [math]::Round([double] $cause.confidence, 3)
     }
@@ -62,4 +73,4 @@ $results = foreach ($line in $LogLine) {
 
 $results |
     Sort-Object CriticalRisk -Descending |
-    Format-Table CriticalRisk, RootCause, RootCauseConfidence, LogLine -Wrap -AutoSize
+    Format-Table Emoji, CriticalRisk, RootCause, RootCauseConfidence, LogLine -Wrap -AutoSize
