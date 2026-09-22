@@ -15,8 +15,8 @@ $questions = @(
         -Instructions 'Is this an active churn threat?' `
         -Criteria @{ `
             true = 'The customer may leave or cancel.'
-            false = 'The customer is stable and engaged.'
-        }
+        false    = 'The customer is stable and engaged.'
+    }
 
     New-JevQuestion `
         -Name route `
@@ -24,8 +24,8 @@ $questions = @(
         -Instructions 'Which team should handle this?' `
         -Criteria @{ `
             support = 'The issue needs technical support.'
-            sales = 'The issue concerns pricing or renewal.'
-        }
+        sales       = 'The issue concerns pricing or renewal.'
+    }
 
     New-JevQuestion `
         -Name urgency `
@@ -43,11 +43,11 @@ $answerEntries = if ($result.answers -is [System.Collections.IDictionary]) {
 }
 else {
     @($result.answers.PSObject.Properties | ForEach-Object {
-        [pscustomobject] @{
-            Key   = $_.Name
-            Value = $_.Value
-        }
-    })
+            [pscustomobject] @{
+                Key   = $_.Name
+                Value = $_.Value
+            }
+        })
 }
 
 $summary = foreach ($answerEntry in $answerEntries) {
@@ -56,11 +56,11 @@ $summary = foreach ($answerEntry in $answerEntries) {
     switch ($answer.type.ToLowerInvariant()) {
         'noul' {
             [pscustomobject] @{
-                Message            = $result.message
-                Question           = $answerEntry.Key
-                Type               = $answer.type
-                Result             = if ($answer.noul -ge 0.5) { 'True' } else { 'False' }
-                ProbabilityOfTrue  = [math]::Round($answer.noul, 3)
+                Message           = $result.message
+                Question          = $answerEntry.Key
+                Type              = $answer.type
+                Result            = if ($answer.noul -ge 0.5) { 'True' } else { 'False' }
+                ProbabilityOfTrue = [math]::Round($answer.noul, 3)
             }
         }
         'choice' {
@@ -85,8 +85,7 @@ $summary = foreach ($answerEntry in $answerEntries) {
 }
 
 Write-Host 'Merged Jev response:' -ForegroundColor Cyan
-$result | ConvertTo-Json -Depth 10
+$result | Format-Table
 
-Write-Host ''
 Write-Host 'Readable summary:' -ForegroundColor Cyan
 $summary | Format-Table -AutoSize -Wrap
