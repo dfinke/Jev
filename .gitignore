@@ -1,0 +1,21 @@
+# PowerShell Gallery packages
+*.nupkg
+*.snupkg
+
+# Test and build output
+TestResults/
+TestOutput/
+coverage/
+artifacts/
+dist/
+
+# Local tooling and editor files
+.vs/
+.vscode/
+*.user
+*.suo
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
