@@ -1,5 +1,7 @@
 #requires -Version 7.0
 
+# Set TYPESAFE_API_KEY before running this example.
+
 Import-Module (Join-Path $PSScriptRoot '..' 'Jev.psd1') -Force
 
 $feedback = [pscustomobject] @{
@@ -32,4 +34,4 @@ $questions = @(
         -Criteria @('Can wait', 'This week', 'Today')
 )
 
-Invoke-Jev -InputObject $feedback -Question $questions -Mock
+Invoke-Jev -InputObject $feedback -Question $questions

@@ -35,7 +35,8 @@ $questions = @(
 $decision = Invoke-Jev -InputObject $feedback -Question $questions
 ```
 
-See [`Examples/Basic.ps1`](Examples/Basic.ps1) for a complete offline example.
+See [`Examples/Basic.ps1`](Examples/Basic.ps1) for a complete API example. Set
+`TYPESAFE_API_KEY` before running it.
 
 ## Module layout
 
