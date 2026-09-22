@@ -28,20 +28,20 @@ $questions = @(
         -Type Noul `
         -Instructions 'Is this log line evidence of a critical security risk or attack?' `
         -Criteria @{ `
-            true  = 'A breach, unauthorized access, credential attack, or privilege escalation.'
-            false = 'A normal operational message or a non-security application failure.'
-        }
+            true = 'A breach, unauthorized access, credential attack, or privilege escalation.'
+        false    = 'A normal operational message or a non-security application failure.'
+    }
 
     New-JevQuestion `
         -Name root_cause `
         -Type Choice `
         -Instructions 'What is the most likely root-cause category for this log line?' `
         -Criteria @{ `
-            auth    = 'Authentication, credentials, identity, authorization, or access failure.'
-            network = 'Network, DNS, connection, socket, timeout, or transport failure.'
-            syntax  = 'Syntax, parsing, malformed configuration, or invalid format failure.'
-            unknown = 'No clear root-cause category is supported by the line.'
-        }
+            auth = 'Authentication, credentials, identity, authorization, or access failure.'
+        network  = 'Network, DNS, connection, socket, timeout, or transport failure.'
+        syntax   = 'Syntax, parsing, malformed configuration, or invalid format failure.'
+        unknown  = 'No clear root-cause category is supported by the line.'
+    }
 )
 
 $results = foreach ($line in $LogLine) {
@@ -63,14 +63,14 @@ $results = foreach ($line in $LogLine) {
     }
 
     [pscustomobject]@{
-        EmojiIndicator     = $emoji
-        LogLine            = $line
-        CriticalRisk       = $criticalRisk
-        RootCause          = [string] $cause.choice
+        Indicator           = $emoji
+        LogLine             = $line
+        CriticalRisk        = $criticalRisk
+        RootCause           = [string] $cause.choice
         RootCauseConfidence = [math]::Round([double] $cause.confidence, 3)
     }
 }
 
 $results |
-    Sort-Object CriticalRisk -Descending |
-    Format-Table EmojiIndicator, CriticalRisk, RootCause, RootCauseConfidence, LogLine -Wrap -AutoSize
+Sort-Object CriticalRisk -Descending |
+Format-Table Indicator, CriticalRisk, RootCause, RootCauseConfidence, LogLine -Wrap -AutoSize
