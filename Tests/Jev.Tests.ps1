@@ -93,6 +93,7 @@ Describe 'Jev module' {
         $merged.message | Should -Be $state.message
         $merged.source | Should -Be 'system-log'
         $merged.model | Should -Be 'jev-latest'
+        $merged.escalate | Should -Be 0.08
         $merged.answers.escalate | Should -Not -BeNullOrEmpty
 
         $raw = Invoke-Jev -State $state -Question $question -Mock -Raw

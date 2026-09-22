@@ -36,9 +36,9 @@ $feedback = 'The customer says the latest invoice is incorrect and may cancel un
 $decision = Invoke-Jev -State $feedback -Question $questions
 ```
 
-`Invoke-Jev` enriches the incoming state with the Jev response so pipeline output
-keeps the original details next to `model`, `answers`, and `usage`. Add `-Raw`
-when you need only the API response.
+`Invoke-Jev` enriches the incoming state with the Jev response. Each named answer
+is raised to a top-level property for easy pipeline use, while the full
+`answers` object is retained. Add `-Raw` when you need only the API response.
 
 It also accepts pipeline input, so existing PowerShell commands can feed Jev
 directly:
