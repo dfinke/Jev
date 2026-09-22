@@ -20,11 +20,18 @@ Import-Module Jev
 $questions = @(
     New-JevQuestion -Name churn -Type Noul -Prompt 'Is this an active churn threat?'
     New-JevQuestion -Name urgency -Type Score -Prompt 'How urgent is this?' `
-        -Level 'Can wait' -Level 'This week' -Level 'Today'
+        -Level @('Can wait', 'This week', 'Today')
 )
 
 $decision = Invoke-Jev -InputObject $feedback -Question $questions
 ```
+
+See [`Examples/Basic.ps1`](Examples/Basic.ps1) for a complete offline example.
+
+## Module layout
+
+- `Public/` contains the commands exported to module users.
+- `Private/` contains implementation helpers and the Jev API client.
 
 ## License
 
