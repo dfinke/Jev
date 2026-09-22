@@ -7,7 +7,7 @@
     Copyright         = '(c) 2026 Jev contributors'
     Description       = 'Turn unstructured input into consistent, structured decisions from PowerShell.'
     PowerShellVersion = '7.0'
-    FunctionsToExport = @('New-JevQuestion', 'New-JevChoice', 'Invoke-Jev')
+    FunctionsToExport = @('New-JevQuestion', 'Invoke-Jev')
     CmdletsToExport   = @()
     VariablesToExport = @()
     AliasesToExport   = @()

@@ -73,6 +73,10 @@ function New-JevQuestion {
         throw "Noul question '$Name' requires -Criteria to be a dictionary with true and false keys."
     }
 
+    if ($Type -eq 'Choice' -and $null -ne $Criteria -and $Criteria -isnot [System.Collections.IDictionary]) {
+        throw "Choice question '$Name' requires -Criteria to be a name-to-description dictionary."
+    }
+
     if ($Type -eq 'Noul' -and $null -ne $Criteria) {
         $criteriaKeys = @($Criteria.Keys | ForEach-Object { [string] $_ })
         if ($criteriaKeys | Where-Object { $_ -notin @('true', 'false') }) {
@@ -81,19 +85,7 @@ function New-JevQuestion {
     }
 
     $normalizedCriteria = $Criteria
-    if ($Type -eq 'Choice' -and $null -ne $Criteria -and $Criteria -isnot [System.Collections.IDictionary]) {
-        $normalizedCriteria = [ordered] @{}
-        foreach ($choice in @($Criteria)) {
-            if ($null -eq $choice.Name -or [string]::IsNullOrWhiteSpace([string] $choice.Name)) {
-                throw "Choice question '$Name' has a duplicate or empty choice name."
-            }
-            if ($normalizedCriteria.Contains([string] $choice.Name)) {
-                throw "Choice question '$Name' has a duplicate or empty choice name."
-            }
-            $normalizedCriteria[[string] $choice.Name] = $choice.Description
-        }
-    }
-    elseif ($Type -eq 'Score' -and $null -ne $Criteria) {
+    if ($Type -eq 'Score' -and $null -ne $Criteria) {
         $normalizedCriteria = @($Criteria)
     }
 

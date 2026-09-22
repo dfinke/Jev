@@ -16,6 +16,5 @@ foreach ($script in Get-ChildItem -LiteralPath $publicPath -Filter '*.ps1' -File
 
 Export-ModuleMember -Function @(
     'Invoke-Jev'
-    'New-JevChoice'
     'New-JevQuestion'
 )

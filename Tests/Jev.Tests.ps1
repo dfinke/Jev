@@ -12,9 +12,8 @@ Describe 'Jev module' {
         $commands = @(Get-Command -Module Jev | Select-Object -ExpandProperty Name)
 
         $commands | Should -Contain 'Invoke-Jev'
-        $commands | Should -Contain 'New-JevChoice'
         $commands | Should -Contain 'New-JevQuestion'
-        $commands.Count | Should -Be 3
+        $commands.Count | Should -Be 2
     }
 
     It 'creates a Noul question' {
@@ -27,12 +26,12 @@ Describe 'Jev module' {
         $question.PSObject.Properties.Name | Should -Be @('Name', 'Type', 'Instructions', 'Criteria')
     }
 
-    It 'creates a Choice question from named choices' {
-        $choices = @(
-            New-JevChoice -Name support -Description 'Route to support'
-            New-JevChoice -Name sales -Description 'Route to sales'
-        )
-        $question = New-JevQuestion -Name route -Type Choice -Instructions 'Which team should handle this?' -Criteria $choices
+    It 'creates a Choice question from criteria' {
+        $criteria = [ordered]@{
+            support = 'Route to support'
+            sales = 'Route to sales'
+        }
+        $question = New-JevQuestion -Name route -Type Choice -Instructions 'Which team should handle this?' -Criteria $criteria
 
         $question.Type | Should -Be 'Choice'
         $question.Criteria.Count | Should -Be 2
@@ -57,13 +56,13 @@ Describe 'Jev module' {
     }
 
     It 'returns mock answers for Noul, Choice, and Score questions' {
-        $choices = @(
-            New-JevChoice -Name support -Description 'Route to support'
-            New-JevChoice -Name sales -Description 'Route to sales'
-        )
+        $criteria = [ordered]@{
+            support = 'Route to support'
+            sales = 'Route to sales'
+        }
         $questions = @(
             New-JevQuestion -Name churn -Type Noul -Instructions 'Is this an active churn threat?'
-            New-JevQuestion -Name route -Type Choice -Instructions 'Which team should handle this?' -Criteria $choices
+            New-JevQuestion -Name route -Type Choice -Instructions 'Which team should handle this?' -Criteria $criteria
             New-JevQuestion -Name urgency -Type Score -Instructions 'How urgent is this?' -Criteria @('Can wait', 'This week', 'Today')
         )
 
