@@ -81,4 +81,22 @@ Describe 'Jev module' {
         $result.answers.Keys | Should -Contain 'route'
         $result.answers.Keys | Should -Contain 'urgency'
     }
+
+    It 'merges state by default and returns only the API response with Raw' {
+        $state = [pscustomobject]@{
+            message = 'The checkout service is returning errors.'
+            source  = 'system-log'
+        }
+        $question = New-JevQuestion -Name escalate -Type Noul -Instructions 'Should this incident be escalated?'
+
+        $merged = Invoke-Jev -State $state -Question $question -Mock
+        $merged.message | Should -Be $state.message
+        $merged.source | Should -Be 'system-log'
+        $merged.model | Should -Be 'jev-latest'
+        $merged.answers.escalate | Should -Not -BeNullOrEmpty
+
+        $raw = Invoke-Jev -State $state -Question $question -Mock -Raw
+        @($raw.PSObject.Properties.Name) | Should -Not -Contain 'message'
+        $raw.model | Should -Be 'jev-latest'
+    }
 }

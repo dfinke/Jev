@@ -10,6 +10,9 @@
 .PARAMETER State
     The input context Jev evaluates. This can be a string, object, or array.
     It maps to the state field in the Jev request payload.
+
+.PARAMETER Raw
+    Returns the raw Jev response without merging it with the input state.
 #>
 function Invoke-Jev {
     [CmdletBinding()]
@@ -26,6 +29,8 @@ function Invoke-Jev {
         [switch] $Mock,
 
         [switch] $MockOnMissingKey,
+
+        [switch] $Raw,
 
         [uri] $Endpoint = 'https://api.typesafe.ai/v1/systemone',
 
@@ -75,6 +80,11 @@ function Invoke-Jev {
         if ($Mock) { $invokeParameters.UseMock = $true }
         if ($MockOnMissingKey) { $invokeParameters.MockOnMissingKey = $true }
 
-        Invoke-JevDecision @invokeParameters
+        $response = Invoke-JevDecision @invokeParameters
+        if ($Raw) {
+            return $response
+        }
+
+        ConvertTo-JevEnrichedResult -State $State -Response $response
     }
 }

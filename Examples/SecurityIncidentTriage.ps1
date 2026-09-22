@@ -62,11 +62,10 @@ $questions = @(
 
 $response = Invoke-Jev -State $state -Question $questions
 
-'Input state:'
-$state | ConvertTo-Json -Depth 10
-
-'Raw Jev response:'
+'Merged Jev response:'
 $response | ConvertTo-Json -Depth 10
+
+# Add -Raw to the Invoke-Jev call when you need only the API response.
 
 $summary = foreach ($answerProperty in $response.answers.PSObject.Properties) {
     $answer = $answerProperty.Value

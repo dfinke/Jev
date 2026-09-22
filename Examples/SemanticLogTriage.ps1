@@ -45,8 +45,9 @@ $questions = @(
 )
 
 $results = foreach ($line in $LogLine) {
+    $state = @{ log_line = $line }
     $response = Invoke-Jev `
-        -State @{ log_line = $line } `
+        -State $state `
         -Question $questions
 
     $security = $response.answers.critical_security_risk
@@ -64,7 +65,7 @@ $results = foreach ($line in $LogLine) {
 
     [pscustomobject]@{
         Indicator           = $emoji
-        LogLine             = $line
+        LogLine             = $response.log_line
         CriticalRisk        = $criticalRisk
         RootCause           = [string] $cause.choice
         RootCauseConfidence = [math]::Round([double] $cause.confidence, 3)

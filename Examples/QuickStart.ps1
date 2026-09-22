@@ -36,8 +36,8 @@ $questions = @(
 
 $result = Invoke-Jev -State $feedback -Question $questions
 
-# Keep the raw Jev response in $result. This view makes the message and the
-# corresponding decisions easy to read together.
+# The default result keeps the input state next to the Jev response. This view
+# makes the message and the corresponding decisions easy to read together.
 $answerEntries = if ($result.answers -is [System.Collections.IDictionary]) {
     @($result.answers.GetEnumerator())
 }
@@ -84,7 +84,7 @@ $summary = foreach ($answerEntry in $answerEntries) {
     }
 }
 
-Write-Host 'Raw Jev response:' -ForegroundColor Cyan
+Write-Host 'Merged Jev response:' -ForegroundColor Cyan
 $result | ConvertTo-Json -Depth 10
 
 Write-Host ''

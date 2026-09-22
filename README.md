@@ -36,9 +36,21 @@ $feedback = 'The customer says the latest invoice is incorrect and may cancel un
 $decision = Invoke-Jev -State $feedback -Question $questions
 ```
 
+`Invoke-Jev` enriches the incoming state with the Jev response so pipeline output
+keeps the original details next to `model`, `answers`, and `usage`. Add `-Raw`
+when you need only the API response.
+
+It also accepts pipeline input, so existing PowerShell commands can feed Jev
+directly:
+
+```powershell
+Get-WinEvent -LogName System -MaxEvents 1 |
+    Invoke-Jev -Question (New-JevQuestion -Name escalate -Type Noul -Instructions 'Should this Windows event be escalated?')
+```
+
 See [`Examples/QuickStart.ps1`](Examples/QuickStart.ps1) for a complete API example. It
-keeps the raw response and builds a readable summary that puts the message
-next to each decision. Set `TYPESAFE_API_KEY` before running it.
+keeps the input details next to the response and builds a readable summary that
+puts the message next to each decision. Set `TYPESAFE_API_KEY` before running it.
 
 Additional examples:
 

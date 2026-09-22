@@ -18,3 +18,4 @@ First preview release of the Jev PowerShell module.
 ### Changed
 
 - `Invoke-Jev` documents `-State` as the input parameter, matching Jev's request payload. `-InputObject` remains available as a compatibility alias.
+- `Invoke-Jev` now enriches pipeline output with the original state and Jev response details by default. Use `-Raw` for the unmodified Jev response.
