@@ -38,7 +38,19 @@ $result = Invoke-Jev -InputObject $feedback -Question $questions
 
 # Keep the raw Jev response in $result. This view makes the message and the
 # corresponding decisions easy to read together.
-$summary = foreach ($answerEntry in $result.answers.GetEnumerator()) {
+$answerEntries = if ($result.answers -is [System.Collections.IDictionary]) {
+    @($result.answers.GetEnumerator())
+}
+else {
+    @($result.answers.PSObject.Properties | ForEach-Object {
+        [pscustomobject] @{
+            Key   = $_.Name
+            Value = $_.Value
+        }
+    })
+}
+
+$summary = foreach ($answerEntry in $answerEntries) {
     $answer = $answerEntry.Value
 
     switch ($answer.type.ToLowerInvariant()) {
