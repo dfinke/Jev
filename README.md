@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/jev-logo.svg" alt="Jev by TypeSafe AI" width="260">
+</p>
+
 # Jev
 
 ## About
