@@ -35,7 +35,7 @@ $questions = @(
 $decision = Invoke-Jev -InputObject $feedback -Question $questions
 ```
 
-See [`Examples/Basic.ps1`](Examples/Basic.ps1) for a complete API example. It
+See [`Examples/QuickStart.ps1`](Examples/QuickStart.ps1) for a complete API example. It
 keeps the raw response and builds a readable summary that puts the message
 next to each decision. Set `TYPESAFE_API_KEY` before running it.
 
