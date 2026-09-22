@@ -34,6 +34,7 @@ $questions = @(
 
 $feedback = 'The customer says the latest invoice is incorrect and may cancel unless billing fixes it.'
 $decision = Invoke-Jev -State $feedback -Question $questions
+$decision
 ```
 
 `Invoke-Jev` enriches the incoming state with the Jev response. Each named answer
