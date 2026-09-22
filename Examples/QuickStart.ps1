@@ -84,4 +84,8 @@ $summary = foreach ($answerEntry in $answerEntries) {
     }
 }
 
+'Raw Jev response:'
+$result | ConvertTo-Json -Depth 10
+
+'Readable summary:'
 $summary | Format-Table -AutoSize -Wrap
