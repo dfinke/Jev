@@ -1,12 +1,14 @@
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrEmpty()]
-    [string] $NuGetApiKey,
+    [string] $NuGetApiKey = $env:NuGetApiKey,
 
     [ValidateNotNullOrEmpty()]
     [string] $Repository = 'PSGallery'
 )
+
+if ([string]::IsNullOrWhiteSpace($NuGetApiKey)) {
+    throw 'Set $env:NuGetApiKey or pass -NuGetApiKey before publishing.'
+}
 
 $manifestPath = Join-Path $PSScriptRoot 'Jev.psd1'
 $manifest = Test-ModuleManifest -Path $manifestPath -ErrorAction Stop

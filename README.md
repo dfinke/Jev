@@ -76,10 +76,10 @@ Additional examples:
 ```
 
 `PublishToGallery.ps1` validates the manifest and publishes the module when
-you are ready:
+you are ready. It reads the API key from `$env:NuGetApiKey`:
 
 ```powershell
-.\PublishToGallery.ps1 -NuGetApiKey $apiKey
+.\PublishToGallery.ps1
 ```
 
 ## License
