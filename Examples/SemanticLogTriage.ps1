@@ -63,7 +63,7 @@ $results = foreach ($line in $LogLine) {
     }
 
     [pscustomobject]@{
-        Emoji              = $emoji
+        EmojiIndicator     = $emoji
         LogLine            = $line
         CriticalRisk       = $criticalRisk
         RootCause          = [string] $cause.choice
@@ -73,4 +73,4 @@ $results = foreach ($line in $LogLine) {
 
 $results |
     Sort-Object CriticalRisk -Descending |
-    Format-Table Emoji, CriticalRisk, RootCause, RootCauseConfidence, LogLine -Wrap -AutoSize
+    Format-Table EmojiIndicator, CriticalRisk, RootCause, RootCauseConfidence, LogLine -Wrap -AutoSize
