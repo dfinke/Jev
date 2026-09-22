@@ -82,9 +82,10 @@ function Invoke-Jev {
 
         $response = Invoke-JevDecision @invokeParameters
         if ($Raw) {
-            return $response
+            $response
         }
-
-        ConvertTo-JevEnrichedResult -State $State -Response $response
+        else {
+            ConvertTo-JevEnrichedResult -State $State -Response $response
+        }
     }
 }

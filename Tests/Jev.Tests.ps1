@@ -98,5 +98,12 @@ Describe 'Jev module' {
         $raw = Invoke-Jev -State $state -Question $question -Mock -Raw
         @($raw.PSObject.Properties.Name) | Should -Not -Contain 'message'
         $raw.model | Should -Be 'jev-latest'
+
+        $states = @(
+            [pscustomobject] @{ message = 'First event.' }
+            [pscustomobject] @{ message = 'Second event.' }
+        )
+        $rawItems = @($states | Invoke-Jev -Question $question -Mock -Raw)
+        $rawItems.Count | Should -Be 2
     }
 }
