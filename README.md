@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/jev-logo.svg" alt="Jev by TypeSafe AI" width="260">
+  <img src="assets/jev-icon.png" alt="Decision pipeline icon" width="180">
 </p>
 
 # Jev

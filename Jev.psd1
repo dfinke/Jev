@@ -17,7 +17,7 @@
             ProjectUri    = 'https://github.com/dfinke/Jev'
             RepositoryUri = 'https://github.com/dfinke/Jev'
             LicenseUri    = 'https://github.com/dfinke/Jev/blob/main/LICENSE'
-            IconUri       = 'https://raw.githubusercontent.com/dfinke/Jev/main/assets/jev-icon.svg'
+            IconUri       = 'https://raw.githubusercontent.com/dfinke/Jev/main/assets/jev-icon.png'
             ReleaseNotes  = 'Initial preview release of the Jev PowerShell module.'
         }
     }
