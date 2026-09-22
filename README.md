@@ -28,4 +28,4 @@ $decision = Invoke-Jev -InputObject $feedback -Question $questions
 
 ## License
 
-License to be determined.
+This project is licensed under the [MIT License](LICENSE).

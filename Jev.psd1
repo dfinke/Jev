@@ -4,7 +4,7 @@
     GUID              = '8b4efb8e-e7e3-4cc8-82ab-ad9314c2980a'
     Author            = 'Jev contributors'
     CompanyName       = ''
-    Copyright         = '(c) Jev contributors. All rights reserved.'
+    Copyright         = '(c) 2026 Jev contributors'
     Description       = 'Turn unstructured input into consistent, structured decisions from PowerShell.'
     PowerShellVersion = '5.1'
     FunctionsToExport = @('New-JevQuestion', 'New-JevChoice', 'Invoke-Jev')
