@@ -34,4 +34,42 @@ $questions = @(
         -Criteria @('Can wait', 'This week', 'Today')
 )
 
-Invoke-Jev -InputObject $feedback -Question $questions
+$result = Invoke-Jev -InputObject $feedback -Question $questions
+
+# Keep the raw Jev response in $result. This view makes the message and the
+# corresponding decisions easy to read together.
+$summary = foreach ($answerEntry in $result.answers.GetEnumerator()) {
+    $answer = $answerEntry.Value
+
+    switch ($answer.type.ToLowerInvariant()) {
+        'noul' {
+            [pscustomobject] @{
+                Message            = $feedback.message
+                Question           = $answerEntry.Key
+                Type               = $answer.type
+                Result             = if ($answer.noul -ge 0.5) { 'True' } else { 'False' }
+                ProbabilityOfTrue  = [math]::Round($answer.noul, 3)
+            }
+        }
+        'choice' {
+            [pscustomobject] @{
+                Message    = $feedback.message
+                Question   = $answerEntry.Key
+                Type       = $answer.type
+                Result     = $answer.choice
+                Confidence = [math]::Round($answer.confidence, 3)
+            }
+        }
+        'score' {
+            [pscustomobject] @{
+                Message    = $feedback.message
+                Question   = $answerEntry.Key
+                Type       = $answer.type
+                Result     = $answer.score
+                Confidence = [math]::Round($answer.confidence, 3)
+            }
+        }
+    }
+}
+
+$summary | Format-Table -AutoSize -Wrap
