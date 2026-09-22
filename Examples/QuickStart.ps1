@@ -56,7 +56,7 @@ $summary = foreach ($answerEntry in $answerEntries) {
     switch ($answer.type.ToLowerInvariant()) {
         'noul' {
             [pscustomobject] @{
-                Message            = $feedback.message
+                Message            = $result.message
                 Question           = $answerEntry.Key
                 Type               = $answer.type
                 Result             = if ($answer.noul -ge 0.5) { 'True' } else { 'False' }
@@ -65,7 +65,7 @@ $summary = foreach ($answerEntry in $answerEntries) {
         }
         'choice' {
             [pscustomobject] @{
-                Message    = $feedback.message
+                Message    = $result.message
                 Question   = $answerEntry.Key
                 Type       = $answer.type
                 Result     = $answer.choice
@@ -74,7 +74,7 @@ $summary = foreach ($answerEntry in $answerEntries) {
         }
         'score' {
             [pscustomobject] @{
-                Message    = $feedback.message
+                Message    = $result.message
                 Question   = $answerEntry.Key
                 Type       = $answer.type
                 Result     = $answer.score
