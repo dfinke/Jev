@@ -32,6 +32,7 @@ $questions = @(
         -Criteria @('Can wait', 'This week', 'Today')
 )
 
+$feedback = 'The customer says the latest invoice is incorrect and may cancel unless billing fixes it.'
 $decision = Invoke-Jev -InputObject $feedback -Question $questions
 ```
 
