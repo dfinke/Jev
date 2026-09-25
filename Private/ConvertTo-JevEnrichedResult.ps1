@@ -1,3 +1,18 @@
+<#
+.SYNOPSIS
+    Combines the original state with Jev's answer values and response details.
+
+.DESCRIPTION
+    Promotes named answers to top-level properties and preserves the full
+    answers and usage objects. Prefixes Jev properties when names collide
+    with properties already present on the state.
+
+.PARAMETER State
+    The original value sent to Jev.
+
+.PARAMETER Response
+    The response returned by Jev.
+#>
 function ConvertTo-JevEnrichedResult {
     param(
         [Parameter(Mandatory)]

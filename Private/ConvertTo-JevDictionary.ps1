@@ -1,5 +1,11 @@
+<#
+.SYNOPSIS
+    Converts a hashtable or PSCustomObject to a string-keyed dictionary.
+
+.PARAMETER Value
+    The dictionary or PSCustomObject to convert.
+#>
 function ConvertTo-JevDictionary {
-    <# Converts a hashtable or PSCustomObject into an ordered dictionary. #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]

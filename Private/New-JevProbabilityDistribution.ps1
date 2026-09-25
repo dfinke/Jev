@@ -1,5 +1,14 @@
+<#
+.SYNOPSIS
+    Builds a probability distribution for a mock Choice or Score answer.
+
+.PARAMETER Keys
+    The available choice names or score-level indexes.
+
+.PARAMETER SelectedIndex
+    The index of the selected key.
+#>
 function New-JevProbabilityDistribution {
-    <# Builds a valid probability distribution for a mock Choice or Score. #>
     param(
         [Parameter(Mandatory)]
         [string[]] $Keys,

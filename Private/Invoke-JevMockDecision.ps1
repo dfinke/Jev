@@ -1,9 +1,21 @@
+<#
+.SYNOPSIS
+    Creates deterministic, schema-compatible answers without an API call.
+
+.DESCRIPTION
+    Makes pipeline behavior testable but does not imitate Jev's quality or
+    calibration.
+
+.PARAMETER State
+    The input state used by the mock's simple text rules.
+
+.PARAMETER Questions
+    The normalized, named Jev questions to answer.
+
+.PARAMETER Model
+    The model name to include in the mock response.
+#>
 function Invoke-JevMockDecision {
-    <#
-    Creates deterministic, schema-compatible answers for local demonstrations.
-    This is intentionally simple.  It makes the pipeline mechanics testable,
-    but it is not intended to imitate Jev's quality or calibration.
-    #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
