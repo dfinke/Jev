@@ -1,4 +1,4 @@
-<##
+<#
 .SYNOPSIS
     Evaluates one state value against named Jev questions.
 
@@ -11,8 +11,43 @@
     The input context Jev evaluates. This can be a string, object, or array.
     It maps to the state field in the Jev request payload.
 
+.PARAMETER Question
+    One or more questions created with New-JevQuestion or New-JevYesNoQuestion.
+
+.PARAMETER Model
+    The Jev model to use. Defaults to jev-latest.
+
+.PARAMETER Mock
+    Returns a deterministic local response without calling the API.
+
+.PARAMETER MockOnMissingKey
+    Uses the local mock only when TYPESAFE_API_KEY is missing.
+
 .PARAMETER Raw
     Returns the raw Jev response without merging it with the input state.
+
+.PARAMETER AsJson
+    Returns the result as a JSON string for easy inspection or copying.
+    Combine with Raw to serialize the raw Jev response instead of the merged result.
+
+.PARAMETER Endpoint
+    The Jev API endpoint.
+
+.PARAMETER TimeoutSec
+    Maximum time, in seconds, for each HTTP request.
+
+.PARAMETER MaxRetries
+    Number of retries for transient HTTP failures.
+
+.PARAMETER RetryDelayMs
+    Initial delay, in milliseconds, before retrying a transient failure.
+
+.EXAMPLE
+    'Checkout is unavailable.' | Invoke-Jev -Question (
+        New-JevYesNoQuestion -Name pageOnCall -Question 'Page on-call now?' `
+            -TrueCriteria 'Customers cannot purchase.' `
+            -FalseCriteria 'Purchases work normally.'
+    )
 #>
 function Invoke-Jev {
     [CmdletBinding()]
@@ -31,6 +66,8 @@ function Invoke-Jev {
         [switch] $MockOnMissingKey,
 
         [switch] $Raw,
+
+        [switch] $AsJson,
 
         [uri] $Endpoint = 'https://api.typesafe.ai/v1/systemone',
 
@@ -82,10 +119,17 @@ function Invoke-Jev {
 
         $response = Invoke-JevDecision @invokeParameters
         if ($Raw) {
-            $response
+            $result = $response
         }
         else {
-            ConvertTo-JevEnrichedResult -State $State -Response $response
+            $result = ConvertTo-JevEnrichedResult -State $State -Response $response
+        }
+
+        if ($AsJson) {
+            ConvertTo-Json -InputObject $result -Depth 100
+        }
+        else {
+            $result
         }
     }
 }

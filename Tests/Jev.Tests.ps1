@@ -13,7 +13,8 @@ Describe 'Jev module' {
 
         $commands | Should -Contain 'Invoke-Jev'
         $commands | Should -Contain 'New-JevQuestion'
-        $commands.Count | Should -Be 2
+        $commands | Should -Contain 'New-JevYesNoQuestion'
+        $commands.Count | Should -Be 3
     }
 
     It 'uses State as the canonical input parameter with a legacy alias' {
@@ -21,6 +22,38 @@ Describe 'Jev module' {
 
         $parameter | Should -Not -BeNullOrEmpty
         @($parameter.Aliases) | Should -Contain 'InputObject'
+    }
+
+    It 'adds Jev to arrays and evaluates each record' {
+        Mock -ModuleName Jev Invoke-JevDecision {
+            param($State, $Questions, $Model)
+
+            [pscustomobject] [ordered]@{
+                model   = $Model
+                answers = [ordered]@{
+                    decision = [pscustomobject] [ordered]@{
+                        type = 'noul'
+                        noul = 0.93
+                    }
+                }
+                usage   = [pscustomobject] [ordered]@{
+                    input_tokens  = 0
+                    output_tokens = 0
+                }
+            }
+        }
+
+        $records = @(
+            [pscustomobject] @{ id = 1; message = 'First record.' }
+            [pscustomobject] @{ id = 2; message = 'Second record.' }
+        )
+
+        $results = @($records.Jev('should this record be kept?'))
+
+        $results.Count | Should -Be 2
+        $results.id | Should -Be @(1, 2)
+        $results.decision | Should -Be @(0.93, 0.93)
+        Should -Invoke Invoke-JevDecision -ModuleName Jev -Exactly 2 -Scope It
     }
 
     It 'creates a Noul question' {
@@ -31,6 +64,19 @@ Describe 'Jev module' {
         $question.Instructions | Should -Be 'Is this an active churn threat?'
         $null -eq $question.Criteria | Should -BeTrue
         $question.PSObject.Properties.Name | Should -Be @('Name', 'Type', 'Instructions', 'Criteria')
+    }
+
+    It 'creates a yes/no question with explicit criteria' {
+        $question = New-JevYesNoQuestion -Name pageOnCall `
+            -Question 'Should the on-call engineer be paged now?' `
+            -TrueCriteria 'Customers cannot complete purchases' `
+            -FalseCriteria 'Purchases are working normally'
+
+        $question.Name | Should -Be 'pageOnCall'
+        $question.Type | Should -Be 'Noul'
+        $question.Instructions | Should -Be 'Should the on-call engineer be paged now?'
+        $question.Criteria['true'] | Should -Be 'Customers cannot complete purchases'
+        $question.Criteria['false'] | Should -Be 'Purchases are working normally'
     }
 
     It 'creates a Choice question from criteria' {
@@ -106,5 +152,21 @@ Describe 'Jev module' {
         )
         $rawItems = @($states | Invoke-Jev -Question $question -Mock -Raw)
         $rawItems.Count | Should -Be 2
+    }
+
+    It 'returns JSON text for merged and raw responses' {
+        $question = New-JevQuestion -Name escalate -Type Noul -Instructions 'Escalate this?'
+
+        $mergedJson = Invoke-Jev -State 'Checkout is unavailable.' -Question $question -Mock -AsJson
+        $mergedJson | Should -BeOfType [string]
+        $merged = $mergedJson | ConvertFrom-Json
+        $merged.State | Should -Be 'Checkout is unavailable.'
+        $merged.PSObject.Properties.Name | Should -Contain 'escalate'
+
+        $rawJson = Invoke-Jev -State 'Checkout is unavailable.' -Question $question -Mock -Raw -AsJson
+        $rawJson | Should -BeOfType [string]
+        $raw = $rawJson | ConvertFrom-Json
+        $raw.PSObject.Properties.Name | Should -Not -Contain 'State'
+        $raw.answers.escalate.type | Should -Be 'noul'
     }
 }

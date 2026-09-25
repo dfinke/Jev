@@ -10,15 +10,62 @@
 
 Jev asks typed questions—yes/no, choice, and score—and returns consistent, structured decisions through a PowerShell-friendly interface. It connects PowerShell to [TypeSafe AI's Jev model](https://typesafe.ai/blog/introducing-system-one-models-and-jev).
 
-This repository contains the PowerShell module and is being prepared for its first preview publication to the PowerShell Gallery.
+This repository contains the PowerShell module. Gallery publication is handled separately from GitHub releases.
 
-Question definitions use the same names as the Jev payload: `Type` maps to
-`type`, `Instructions` maps to `instructions`, and `Criteria` maps to
-`criteria`. `Name` becomes the key that identifies the answer.
+Set `TYPESAFE_API_KEY`, then try two checkout incidents:
+
+```powershell
+Import-Module Jev
+
+$question = New-JevYesNoQuestion -Name pageOnCall `
+    -Question 'Should the on-call engineer be paged now?' `
+    -TrueCriteria 'Customers cannot complete purchases' `
+    -FalseCriteria 'Purchases are working normally'
+
+@(
+    'Checkout is returning HTTP 503 errors; customers cannot place orders.'
+    'Checkout is healthy; customers are placing orders normally with no errors.'
+) |
+    Invoke-Jev -Question $question |
+    Select-Object State, @{
+        Name       = 'pageOnCall'
+        Expression = { if ($_.pageOnCall -ge 0.8) { 'page' } else { 'do not page' } }
+    }
+```
+
+Illustrative output:
+
+```text
+State                                                                       pageOnCall
+-----                                                                       ----------
+Checkout is returning HTTP 503 errors; customers cannot place orders.       page
+Checkout is healthy; customers are placing orders normally with no errors.  do not page
+```
+
+`New-JevYesNoQuestion` creates a Noul question. Jev returns a probability of
+"yes" in `pageOnCall`; the calculated `Select-Object` property turns that
+number into a readable label. The `0.8` cutoff is an example paging policy,
+not a Jev default. Scores below it display `do not page`, including uncertain
+ones. [`Examples/PageOnCall.ps1`](Examples/PageOnCall.ps1) shows a separate
+`Review` outcome for uncertain incidents.
+
+For full control, `New-JevQuestion` uses names that match the Jev payload:
+`Type` maps to `type`, `Instructions` to `instructions`, and `Criteria` to
+`criteria`. `Name` becomes the answer key. The yes/no question above is
+equivalent to:
+
+```powershell
+$question = New-JevQuestion -Name pageOnCall -Type Noul `
+    -Instructions 'Should the on-call engineer be paged now?' `
+    -Criteria @{
+        true  = 'Customers cannot complete purchases'
+        false = 'Purchases are working normally'
+    }
+```
 
 ## Current status
 
-The `0.1.0` preview is ready for manual publication. The API and examples may continue to evolve as Jev develops.
+The `0.2.0` preview adds a yes/no question helper, array `.Jev()` method, JSON output, and new examples. The API and examples may continue to evolve as Jev develops.
 
 ## Planned usage
 
@@ -44,6 +91,16 @@ $decision
 `Invoke-Jev` enriches the incoming state with the Jev response. Each named answer
 is raised to a top-level property for easy pipeline use, while the full
 `answers` object is retained. Add `-Raw` when you need only the API response.
+Use `-AsJson` to display the result as JSON while exploring; combine it with
+`-Raw` to see the raw API response as JSON.
+
+```powershell
+Invoke-Jev -State $feedback -Question $questions -AsJson
+Invoke-Jev -State $feedback -Question $questions -Raw -AsJson
+```
+
+`-AsJson` returns JSON text, so use the default object output when you want to
+filter or sort the decisions in a PowerShell pipeline.
 
 It also accepts pipeline input, so existing PowerShell commands can feed Jev
 directly:
@@ -62,6 +119,28 @@ Additional examples:
 - [`Examples/RefundTriage.ps1`](Examples/RefundTriage.ps1) follows TypeSafe's refund request example.
 - [`Examples/SecurityIncidentTriage.ps1`](Examples/SecurityIncidentTriage.ps1) turns a security alert and its context into a response choice.
 - [`Examples/SemanticLogTriage.ps1`](Examples/SemanticLogTriage.ps1) classifies log lines by security risk and root-cause category.
+- [`Examples/NotesToActions.ps1`](Examples/NotesToActions.ps1) sorts rough notes into actions, decisions, and background; pass `-Path` to read notes from a text file.
+- [`Examples/ReleaseNotes.ps1`](Examples/ReleaseNotes.ps1) reviews recent Git commit subjects and builds a draft release-note list for human review.
+- [`Examples/StandupReport.ps1`](Examples/StandupReport.ps1) organizes recent repo commits, shows working-tree changes, and accepts your plan and blockers as input.
+- [`Examples/PowerShellCommandFinder.ps1`](Examples/PowerShellCommandFinder.ps1) searches local command help for candidates, asks Jev which best fits a plain-English task, and displays examples without running the command.
+- [`Examples/DealDesk.ps1`](Examples/DealDesk.ps1) calculates quote options from an editable Excel deal, then asks Jev to recommend the next negotiation move. Requires ImportExcel and `TYPESAFE_API_KEY`.
+- [`Examples/PageOnCall.ps1`](Examples/PageOnCall.ps1) evaluates checkout incidents against an example paging policy and shows when to page, hold, or review.
+
+Try it with tasks such as:
+
+```powershell
+.\Examples\PowerShellCommandFinder.ps1 -Task 'Find files larger than 100 MB'
+.\Examples\PowerShellCommandFinder.ps1 -Task 'Show processes using the most memory' -CandidateCount 18
+.\Examples\PowerShellCommandFinder.ps1 -Task 'Search text inside every PowerShell script'
+```
+
+For the deal desk, edit the `Deal` sheet in [`data/DealDesk.xlsx`](data/DealDesk.xlsx), then run:
+
+```powershell
+.\Examples\DealDesk.ps1
+```
+
+Each run writes a separate review workbook with the recommendation and all priced options. PowerShell calculates revenue and margin; Jev selects among moves that meet the margin floor and buyer budget. Other moves remain visible for human review. The confidence is Jev's confidence in its choice, not a forecast of whether the deal will close.
 
 ## Module layout
 

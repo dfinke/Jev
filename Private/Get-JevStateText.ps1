@@ -1,5 +1,11 @@
+<#
+.SYNOPSIS
+    Converts a state value to compact text for the local mock.
+
+.PARAMETER State
+    The string or object to represent as text.
+#>
 function Get-JevStateText {
-    <# Creates a compact text representation for the deterministic mock. #>
     param(
         [Parameter(Mandatory)]
         [object] $State

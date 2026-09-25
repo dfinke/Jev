@@ -7,12 +7,31 @@ function Invoke-JevDecision {
     .SYNOPSIS
         Sends one state value and a named question dictionary to Jev.
 
+    .DESCRIPTION
+        Validates and normalizes questions, calls the Jev endpoint with retries,
+        or returns a local mock response when requested.
+
     .PARAMETER State
         The string, object, or array all questions should evaluate.
 
     .PARAMETER Questions
         A hashtable whose values are typed Jev questions.  The wrapper accepts
         either lower-case API types or the readable Noul/Choice/Score spellings.
+
+    .PARAMETER Model
+        The model name to send with the request.
+
+    .PARAMETER Endpoint
+        The Jev API endpoint.
+
+    .PARAMETER TimeoutSec
+        Maximum time, in seconds, for each HTTP request.
+
+    .PARAMETER MaxRetries
+        Number of retries for transient HTTP failures.
+
+    .PARAMETER RetryDelayMs
+        Initial delay, in milliseconds, before retrying a transient failure.
 
     .PARAMETER UseMock
         Return a schema-compatible local response without making an HTTP call.

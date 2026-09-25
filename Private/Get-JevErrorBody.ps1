@@ -1,5 +1,11 @@
+<#
+.SYNOPSIS
+    Extracts the API error body when the exception provides one.
+
+.PARAMETER Exception
+    The exception raised by the failed HTTP request.
+#>
 function Get-JevErrorBody {
-    <# Attempts to preserve the API's useful error payload when available. #>
     param([Parameter(Mandatory)] [System.Exception] $Exception)
 
     try {

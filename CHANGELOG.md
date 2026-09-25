@@ -2,6 +2,20 @@
 
 All notable changes to Jev are documented here.
 
+## [0.2.0] - 2026-09-24
+
+### Added
+
+- `Invoke-Jev -AsJson` to return the merged result as JSON text; combine with `-Raw` to serialize the raw Jev response.
+- `New-JevYesNoQuestion` as a friendly way to create a Noul question with explicit true and false criteria.
+- `.Jev()` on arrays to evaluate each record against a plain-language condition.
+- A two-incident README demo that displays `page` or `do not page`, plus a fuller paging example with an uncertainty review outcome.
+- Examples for deal decisions, Excel queues, notes, release notes, standups, and PowerShell command discovery.
+
+### Documentation
+
+- Clarified that Noul returns a probability and that the paging cutoff is an example policy.
+
 ## [0.1.0] - 2026-09-22
 
 First preview release of the Jev PowerShell module.
