@@ -1,10 +1,12 @@
 <#
 .SYNOPSIS
-    Adds the Jev script method to arrays when the module loads.
+    Adds Jev script methods to arrays when the module loads.
 
 .DESCRIPTION
-    The method evaluates each array record with a Noul question. Restores
-    the previous array type data when the module is removed.
+    Extends System.Array with:
+      - .Jev(ConditionOrQuestions, [switch]$Mock): Evaluates array records against a condition or Jev questions.
+      - .JevWhere(Condition, [double]$Threshold, [switch]$Mock): Filters array elements based on a semantic condition.
+      - .JevRank(Query, [string]$Property, [int]$Top, [switch]$Mock): Reranks array elements by relevance.
 #>
 function Register-JevTypeData {
     [CmdletBinding()]
@@ -12,24 +14,89 @@ function Register-JevTypeData {
 
     $existingArrayTypeData = Get-TypeData -TypeName System.Array
 
-    $arrayMethod = {
+    $arrayJevMethod = {
         param(
             [Parameter(Mandatory, Position = 0)]
             [ValidateNotNullOrEmpty()]
-            [string] $Condition
+            [object] $ConditionOrQuestion,
+
+            [switch] $Mock
         )
 
-        $question = New-JevQuestion -Name decision -Type Noul -Instructions $Condition
+        $questions = if ($ConditionOrQuestion -is [string]) {
+            @(
+                New-JevQuestion -Name decision 
+                                -Type Noul 
+                                -Instructions $ConditionOrQuestion
+            )
+        }
+        else {
+            @($ConditionOrQuestion)
+        }
+
+        $invokeParams = @{
+            Question = $questions
+        }
+        if ($Mock.IsPresent) { $invokeParams.Mock = $true }
 
         foreach ($record in $this) {
-            Invoke-Jev -State $record -Question $question
+            Invoke-Jev -State $record @invokeParams
         }
+    }
+
+    $arrayJevWhereMethod = {
+        param(
+            [Parameter(Mandatory, Position = 0)]
+            [string] $Condition,
+            [double] $Threshold = 0.7,
+            [switch] $Mock
+        )
+
+        $invokeParams = @{
+            Condition = $Condition
+            Threshold = $Threshold
+        }
+        if ($Mock.IsPresent) { $invokeParams.Mock = $true }
+
+        @($this | Where-Jev @invokeParams)
+    }
+
+    $arrayJevRankMethod = {
+        param(
+            [Parameter(Mandatory, Position = 0)]
+            [string] $Query,
+            [string] $Property,
+            [int] $Top = 0,
+            [switch] $Mock
+        )
+
+        $invokeParams = @{
+            Candidates = $this
+            Query      = $Query
+        }
+        if ($Property) { $invokeParams.Property = $Property }
+        if ($Top -gt 0) { $invokeParams.Top = $Top }
+        if ($Mock.IsPresent) { $invokeParams.Mock = $true }
+
+        @(Invoke-JevRerank @invokeParams)
     }
 
     Update-TypeData -TypeName System.Array `
         -MemberType ScriptMethod `
         -MemberName Jev `
-        -Value $arrayMethod `
+        -Value $arrayJevMethod `
+        -Force
+
+    Update-TypeData -TypeName System.Array `
+        -MemberType ScriptMethod `
+        -MemberName JevWhere `
+        -Value $arrayJevWhereMethod `
+        -Force
+
+    Update-TypeData -TypeName System.Array `
+        -MemberType ScriptMethod `
+        -MemberName JevRank `
+        -Value $arrayJevRankMethod `
         -Force
 
     $module = $ExecutionContext.SessionState.Module

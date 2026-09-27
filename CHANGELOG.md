@@ -2,6 +2,35 @@
 
 All notable changes to Jev are documented here.
 
+## [0.3.0] - 2026-09-26
+
+### Added (Gemini Flash 3.8 (HIGH) + /skills)
+
+- **Question Primitives**:
+  - `New-JevChoiceQuestion` for typed Choice questions with automatic fallback (`-AllowOther`, `-FallbackDescription`).
+  - `New-JevScoreQuestion` for ordered descriptive levels with normalization metadata (`MaxLevel`, `LevelCount`).
+  - `New-JevCriterion` for contrastive structured criteria (`what`, `not_for`, `examples`).
+  - `New-JevQuestionSet` to validate and assemble question batches for speculative fan-out.
+
+- **Decision Analysis & Uncertainty Engine**:
+  - `Get-JevConfidenceTier` evaluating decisions against the 3-tier behavioral model (`Act`, `Review`, `Escalate`) with risk-scaled thresholds (`Low`, `Standard`, `High`).
+  - `Measure-JevScore` for normalized composite scoring across Noul/Score dimensions with hard policy overrides.
+  - `Invoke-JevRerank` implementing the "Select instead of generate" / Reranking pattern.
+
+- **PowerShell Pipeline & Array Extensions**:
+  - `Where-Jev` for semantic, natural-language pipeline filtering.
+  - `Select-JevRoute` for intent-based routing to scriptblocks.
+  - Array script methods extended on `System.Array`: overloaded `.Jev()`, `.JevWhere()`, and `.JevRank()`.
+
+- **Dynamic Mock & Fixture Subsystem**:
+  - `Set-JevMockRule` and `Clear-JevMockRule` for custom offline unit testing without API keys.
+  - `Export-JevFixture` and `Import-JevFixture` for recording live responses and replaying them offline in CI/CD.
+
+- **New Workflows & Examples**:
+  - `SpeculativeCustomerRouter.ps1` and `CandidateLogExtraction.ps1`.
+- **Comprehensive Pester Tests**:
+  - Added test suites for Questions, Composition, Pipeline, and Mock subsystems.
+
 ## [0.2.0] - 2026-09-24
 
 ### Added

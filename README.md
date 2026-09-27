@@ -65,7 +65,7 @@ $question = New-JevQuestion -Name pageOnCall -Type Noul `
 
 ## Current status
 
-The `0.2.0` preview adds a yes/no question helper, array `.Jev()` method, JSON output, and new examples. The API and examples may continue to evolve as Jev develops.
+The `0.3.0` release introduces extended question primitives (`Choice` and `Score` builders, structured criteria), confidence tier evaluation, composite scoring with policy overrides, candidate reranking, native PowerShell pipeline filtering (`Where-Jev`, `Select-JevRoute`), and dynamic mock rules.
 
 ## Planned usage
 
@@ -125,6 +125,8 @@ Additional examples:
 - [`Examples/PowerShellCommandFinder.ps1`](Examples/PowerShellCommandFinder.ps1) searches local command help for candidates, asks Jev which best fits a plain-English task, and displays examples without running the command.
 - [`Examples/DealDesk.ps1`](Examples/DealDesk.ps1) calculates quote options from an editable Excel deal, then asks Jev to recommend the next negotiation move. Requires ImportExcel and `TYPESAFE_API_KEY`.
 - [`Examples/PageOnCall.ps1`](Examples/PageOnCall.ps1) evaluates checkout incidents against an example paging policy and shows when to page, hold, or review.
+- [`Examples/SpeculativeCustomerRouter.ps1`](Examples/SpeculativeCustomerRouter.ps1) demonstrates the Speculative Fan-Out pattern, evaluating department routing and speculative questions in a single Jev pass.
+- [`Examples/CandidateLogExtraction.ps1`](Examples/CandidateLogExtraction.ps1) parses candidate error lines in code and uses Jev to rerank and select the primary root cause.
 
 Try it with tasks such as:
 
