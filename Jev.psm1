@@ -20,4 +20,6 @@ Export-ModuleMember -Function @(
     'Invoke-Jev'
     'New-JevQuestion'
     'New-JevYesNoQuestion'
+    'New-JevChoiceQuestion'
+    'New-JevScoreQuestion'
 )
