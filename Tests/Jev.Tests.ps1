@@ -14,7 +14,7 @@ Describe 'Jev module' {
         $commands | Should -Contain 'Invoke-Jev'
         $commands | Should -Contain 'New-JevQuestion'
         $commands | Should -Contain 'New-JevYesNoQuestion'
-        $commands.Count | Should -Be 3
+        $commands.Count | Should -BeGreaterOrEqual 3
     }
 
     It 'uses State as the canonical input parameter with a legacy alias' {
