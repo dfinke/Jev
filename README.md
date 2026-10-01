@@ -10,6 +10,8 @@
 
 Jev asks typed questions—yes/no, choice, and score—and returns consistent, structured decisions through a PowerShell-friendly interface. It connects PowerShell to [TypeSafe AI's Jev model](https://typesafe.ai/blog/introducing-system-one-models-and-jev).
 
+For a related PowerShell decision module using Perplexity, see [PSAIPerplexityDecisions](https://github.com/dfinke/PSAIPerplexityDecisions).
+
 This repository contains the PowerShell module. Gallery publication is handled separately from GitHub releases.
 
 Set `TYPESAFE_API_KEY`, then try two checkout incidents:
