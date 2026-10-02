@@ -1,6 +1,6 @@
 # Jev PowerShell demos
 
-Each demo is a small, runnable example of using Jev from PowerShell. The scripts use the Jev module, make live requests, and include sample input. Set `TYPESAFE_API_KEY` before running a demo. Start at the repository root unless its README says otherwise.
+Each demo is a small, runnable example of using Jev from PowerShell. These PowerShell ports are inspired by the [ThinkThen demos](https://github.com/botassembly/thinkthen/tree/main/demos); each demo README links to its source. The scripts use the Jev module, make live requests, and include sample input. Set `TYPESAFE_API_KEY` before running a demo. Start at the repository root unless its README says otherwise.
 
 ## Start with these
 

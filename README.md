@@ -118,7 +118,7 @@ puts the message next to each decision. Set `TYPESAFE_API_KEY` before running it
 
 Additional examples:
 
-- [PowerShell demos](Examples/Demos/README.md) collects the small, teaching-focused demos ported from the [thinkthen demos](https://github.com/botassembly/thinkthen/tree/main/demos).
+- [PowerShell demos](Examples/Demos/README.md) collects the teaching-focused demos.
 
 - [`Examples/RefundTriage.ps1`](Examples/RefundTriage.ps1) follows TypeSafe's refund request example.
 - [`Examples/SecurityIncidentTriage.ps1`](Examples/SecurityIncidentTriage.ps1) turns a security alert and its context into a response choice.
