@@ -1,0 +1,20 @@
+2026-09-30T14:02:11.104Z INFO  [startup] Starting invoice-api version=4.18.2 build=8f31c2
+2026-09-30T14:02:11.208Z INFO  [config] Loaded runtime configuration for environment=production
+2026-09-30T14:02:11.319Z INFO  [feature-flags] Enabled flags: invoice-v2, async-receipts
+2026-09-30T14:02:11.427Z WARN  [telemetry] Optional telemetry token is not configured; exporter disabled
+2026-09-30T14:02:11.612Z WARN  [secrets] Mounted database-credentials version=41; deployment configuration expects version=42
+2026-09-30T14:02:11.750Z INFO  [database] Opening PostgreSQL connection pool host=orders-db.internal max_connections=20
+2026-09-30T14:02:11.891Z ERROR [database] FATAL: password authentication failed for user "invoice_api"
+2026-09-30T14:02:11.895Z WARN  [database] Connection attempt 1/5 failed; retrying in 250ms
+2026-09-30T14:02:12.149Z ERROR [database] FATAL: password authentication failed for user "invoice_api"
+2026-09-30T14:02:12.153Z WARN  [database] Connection attempt 2/5 failed; retrying in 500ms
+2026-09-30T14:02:12.658Z INFO  [database] TLS handshake completed with orders-db.internal
+2026-09-30T14:02:12.794Z ERROR [database] FATAL: password authentication failed for user "invoice_api"
+2026-09-30T14:02:12.799Z WARN  [database] Connection attempt 3/5 failed; retrying in 1000ms
+2026-09-30T14:02:13.804Z ERROR [database] FATAL: password authentication failed for user "invoice_api"
+2026-09-30T14:02:14.812Z ERROR [database] FATAL: password authentication failed for user "invoice_api"
+2026-09-30T14:02:14.817Z ERROR [database] Startup check failed: unable to establish a database connection after 5 attempts
+2026-09-30T14:02:14.823Z INFO  [health] Readiness probe remains unhealthy: startup checks incomplete
+2026-09-30T14:02:15.006Z INFO  [shutdown] Received startup failure; beginning graceful shutdown
+2026-09-30T14:02:15.111Z INFO  [shutdown] HTTP listener closed
+2026-09-30T14:02:15.139Z INFO  [shutdown] Process exited with status=1

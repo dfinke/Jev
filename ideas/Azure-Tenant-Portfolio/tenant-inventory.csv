@@ -1,0 +1,11 @@
+TenantName,SubscriptionCount,MonthlyCostUsd,AdvisorCostRecommendationCount,PotentialMonthlySavingsUsd,NonCompliantResources,UntaggedResourcePercent,SnapshotAgeDays,ContextNotes
+Alpine Foods,14,48200,3,4100,18,12,14,"Policy results show several noncompliant resources. The platform owner says most are development workloads, but production scope has not been confirmed."
+Northwind Design,8,12900,5,1850,2,4,9,"Advisor identified low-usage development resources. The owners agree to review savings recommendations before the next budget cycle."
+Fabrikam Health,22,73600,1,300,7,3,21,"The company plans a data-center exit. Several legacy applications have undocumented dependencies and the migration sequence is still unknown."
+Contoso Retail,31,91400,2,900,4,6,4,"The commerce platform is stable. A regional expansion is planned next quarter; finance wants to understand how it may change the cloud cost forecast."
+Blue Yonder Logistics,11,23800,0,0,9,21,96,"The inventory snapshot is old and several subscriptions have no confirmed owner. The client contact is unsure whether some listed workloads are still active."
+Litware Media,6,17400,1,120,0,1,7,"The tenant is well documented and stable. No major projects are planned, and the current cost and policy reviews found no significant follow-up."
+Tailspin Toys,18,56200,4,6700,5,8,32,"Spend rose after a seasonal launch. The team expects demand to fall next month, but has not identified which workloads can safely scale down."
+Adventure Works,9,28700,1,240,3,5,18,"A merger is underway. The acquired team's subscriptions must remain separate for now; the longer-term tenant and workload plan is undecided."
+Proseware Travel,4,8600,0,0,6,17,73,"The notes mention an upcoming renewal and possible migration, but do not identify a preferred destination or a confirmed workload owner."
+Wide World Importers,13,33100,2,800,1,2,11,"Resource ownership and tagging are mostly clear. One business unit may retire an application, but no owner or date has been confirmed."

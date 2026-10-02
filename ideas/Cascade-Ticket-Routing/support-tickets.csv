@@ -1,0 +1,9 @@
+TicketId,Message,OrderId,OrderStatus,DuplicateChargeConfirmed
+CAS-401,Where is order A-104? I placed it last week.,A-104,In transit,false
+CAS-402,I was charged twice for order A-105. Is the duplicate eligible for a refund?,A-105,Delivered,true
+CAS-403,I did not authorize a $1200 charge and need someone to stop it immediately.,A-106,Delivered,false
+CAS-404,Checkout is returning 503 errors and customers cannot place orders.,,,false
+CAS-405,"The report export button fails, but I can still view the report on screen.",,,false
+CAS-406,"Something is wrong with my order, but I am not sure what.",,,false
+CAS-407,Can you check the status of my order?,,,false
+CAS-408,The charge on my statement looks wrong. Can I get it refunded?,A-108,Delivered,false

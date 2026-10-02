@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Azure Cost Flow</title>
+  <link href="/main.css" rel="stylesheet" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-mark">J</div>
+      <div>
+        <div class="eyebrow">POWERSHELL + JEV</div>
+        <h1>Azure Cost Flow</h1>
+      </div>
+      <div class="topbar-spacer"></div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span id="theme-icon" aria-hidden="true">◐</span><span id="theme-label">Dark mode</span></button>
+      <div class="status" id="status"><span class="status-dot"></span><span id="status-text">Ready</span></div>
+    </header>
+
+    <section class="intro-row">
+      <div>
+        <h2>Watch one recommendation become a routed action.</h2>
+        <p>Jev classifies the owner note. A PowerShell <code>switch</code> sends each row to a review lane.</p>
+      </div>
+      <div class="request-count"><strong id="record-count">—</strong><span>recommendations</span><small>one Jev request per row</small></div>
+    </section>
+
+    <section class="controls card">
+      <div class="file-control">
+        <label for="csv-path">Input CSV</label>
+        <div class="file-row">
+          <div class="file-path" id="csv-path" title="Loading sample CSV…">Loading sample CSV…</div>
+          <button class="button button-secondary" id="choose-csv">Choose CSV</button>
+        </div>
+        <div class="help-text">Needs recommendation, environment, savings, and owner-note columns.</div>
+      </div>
+      <div class="pace-control">
+        <label for="pace">Playback pace</label>
+        <select id="pace">
+          <option value="0">Fast</option>
+          <option value="350" selected>Walkthrough</option>
+          <option value="800">Slow</option>
+        </select>
+        <div class="help-text">Pace adds a pause between flow steps.</div>
+      </div>
+      <button class="button button-run" id="run-button"><span class="play-icon">▶</span> Run flow</button>
+    </section>
+
+    <section class="work-area">
+      <article class="card current-card">
+        <div class="section-heading compact">
+          <div><div class="eyebrow">CURRENT RECORD</div><h3 id="current-id">Waiting to run</h3></div>
+          <div class="row-progress" id="row-progress">0 / 0</div>
+        </div>
+        <div class="current-content" id="current-content">
+          <p class="empty-state">Choose a CSV and run the flow to watch a row move through the decision path.</p>
+        </div>
+        <div class="decision-panel">
+          <div class="decision-stat"><span>Jev classification</span><strong id="classification">—</strong></div>
+          <div class="decision-stat"><span>Confidence</span><strong id="confidence">—</strong></div>
+          <div class="decision-stat wide"><span>PowerShell route</span><strong id="route">—</strong><small id="route-reason"></small></div>
+        </div>
+      </article>
+
+      <article class="card activity-card">
+        <div class="section-heading compact">
+          <div><div class="eyebrow">ROUTED ITEMS</div><h3>Run summary</h3></div>
+          <div class="summary-total"><strong id="completed-count">0</strong><span>done</span></div>
+        </div>
+        <div class="bucket-summary">
+          <div><span class="bucket-dot cost"></span><span>Cost review</span><strong id="summary-cost">0</strong></div>
+          <div><span class="bucket-dot technical"></span><span>Technical review</span><strong id="summary-technical">0</strong></div>
+          <div><span class="bucket-dot context"></span><span>Gather context</span><strong id="summary-context">0</strong></div>
+        </div>
+        <div class="activity-list" id="activity-list"><div class="empty-state">No recommendations routed yet.</div></div>
+        <div class="output-note" id="output-note">Results will be saved as a CSV after the run.</div>
+      </article>
+    </section>
+
+    <section class="flow-card card">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">THE DECISION PATH</div>
+          <h3>From CSV row to review lane</h3>
+        </div>
+        <div class="legend"><span><i class="legend-dot jev-dot"></i>Jev</span><span><i class="legend-dot ps-dot"></i>PowerShell</span></div>
+      </div>
+      <div class="diagram-wrap">
+        <svg class="flow-diagram" viewBox="0 0 1160 430" role="img" aria-label="Flow from CSV row through Jev classification and PowerShell switch into a review lane">
+          <defs>
+            <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="#9aacc1"></path>
+            </marker>
+          </defs>
+          <path id="path-input-jev" class="connector" d="M230 106 H278" marker-end="url(#arrow)" />
+          <path id="path-jev-answer" class="connector" d="M478 106 H526" marker-end="url(#arrow)" />
+          <path id="path-answer-switch" class="connector" d="M726 106 H774" marker-end="url(#arrow)" />
+          <path id="path-process-jev" d="M278 106 V148 H478 V106" fill="none" visibility="hidden" />
+          <path id="path-process-answer" d="M526 106 V148 H726 V106" fill="none" visibility="hidden" />
+          <path id="path-process-switch" d="M774 106 V148 H874 V154" fill="none" visibility="hidden" />
+
+          <g class="flow-node" data-stage="input">
+            <rect x="30" y="58" width="200" height="96" rx="16" />
+            <text class="node-kicker" x="52" y="84">INPUT</text>
+            <text class="node-title" x="52" y="113">CSV row</text>
+            <text class="node-caption" x="52" y="136">Recommendation + owner note</text>
+          </g>
+          <g class="flow-node jev-node" data-stage="jev">
+            <rect x="278" y="58" width="200" height="96" rx="16" />
+            <text class="node-kicker" x="300" y="84">JEV · CHOICE</text>
+            <text class="node-title" x="300" y="113">Classify</text>
+            <text class="node-caption" x="300" y="136">One bounded question</text>
+          </g>
+          <g class="flow-node jev-node" data-stage="classify">
+            <rect x="526" y="58" width="200" height="96" rx="16" />
+            <text class="node-kicker" x="548" y="84">ANSWER</text>
+            <text class="node-title node-answer" id="diagram-answer" x="548" y="113">reviewLane</text>
+            <text class="node-caption" id="diagram-confidence" x="548" y="136">category + confidence</text>
+          </g>
+          <g class="flow-node ps-node" data-stage="switch">
+            <rect x="774" y="58" width="200" height="96" rx="16" />
+            <text class="node-kicker" x="796" y="84">POWERSHELL</text>
+            <text class="node-title" x="796" y="113">switch</text>
+            <text class="node-caption node-case" id="diagram-case" x="796" y="136">match a case</text>
+          </g>
+
+          <path id="path-route-cost_owner_review" class="connector route-connector" data-lane="cost_owner_review" d="M874 154 V237 H180 V287" marker-end="url(#arrow)" />
+          <path id="path-route-technical_review" class="connector route-connector" data-lane="technical_review" d="M874 154 V237 H580 V287" marker-end="url(#arrow)" />
+          <path id="path-route-needs_context" class="connector route-connector" data-lane="needs_context" d="M874 154 V237 H980 V287" marker-end="url(#arrow)" />
+          <text class="branch-label" x="88" y="224">cost_owner_review</text>
+          <text class="branch-label" x="485" y="224">technical_review</text>
+          <text class="branch-label" x="905" y="224">needs_context</text>
+
+          <g class="bucket-node" data-bucket="cost_owner_review">
+            <rect x="55" y="290" width="250" height="116" rx="17" />
+            <text class="bucket-name" x="80" y="326">Workload-owner</text>
+            <text class="bucket-name" x="80" y="350">cost review</text>
+            <text class="bucket-count" x="80" y="380"><tspan id="count-cost">0</tspan> routed</text>
+          </g>
+          <g class="bucket-node" data-bucket="technical_review">
+            <rect x="455" y="290" width="250" height="116" rx="17" />
+            <text class="bucket-name" x="480" y="339">Technical review</text>
+            <text class="bucket-count" x="480" y="380"><tspan id="count-technical">0</tspan> routed</text>
+          </g>
+          <g class="bucket-node" data-bucket="needs_context">
+            <rect x="855" y="290" width="250" height="116" rx="17" />
+            <text class="bucket-name" x="880" y="339">Gather context</text>
+            <text class="bucket-count" x="880" y="380"><tspan id="count-context">0</tspan> routed</text>
+          </g>
+          <path id="flow-trail" visibility="hidden" />
+          <circle id="flow-particle" cx="230" cy="106" r="5" visibility="hidden" />
+        </svg>
+      </div>
+    </section>
+
+    <footer>
+      <span>Review aid only · no Azure resources are changed</span>
+      <span>PowerShell runs locally · Jev API key stays in the environment</span>
+    </footer>
+  </main>
+  <script src="/main.js"></script>
+</body>
+</html>

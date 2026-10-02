@@ -1,0 +1,10 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "AzureCostRecommendationVisualizer",
+  "outputfilename": "visualizer",
+  "wailsjsdir": "./frontend",
+  "author": {
+    "name": "dfinke",
+    "email": "finked@hotmail.com"
+  }
+}

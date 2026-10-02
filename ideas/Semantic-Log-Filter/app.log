@@ -1,0 +1,12 @@
+2026-09-27 06:01:12 INFO  Service started on port 8080
+2026-09-27 06:02:45 INFO  Nightly disk check passed
+2026-09-27 06:03:10 WARN  Volume /var at 98% capacity
+2026-09-27 06:04:22 ERROR write failed: ENOSPC
+2026-09-27 06:05:01 INFO  User jsmith logged in
+2026-09-27 06:05:33 ERROR No space left on device
+2026-09-27 06:06:14 WARN  Temp directory quota policy updated
+2026-09-27 06:07:48 ERROR Cannot extend tablespace USERS: out of storage
+2026-09-27 06:08:02 INFO  Cache cleared, 0 items removed
+2026-09-27 06:09:19 WARN  Backup job skipped: target drive full
+2026-09-27 06:10:05 ERROR Connection to db01 timed out
+2026-09-27 06:11:30 INFO  Disk space report emailed to ops

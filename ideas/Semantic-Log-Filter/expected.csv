@@ -1,0 +1,13 @@
+Line,ExpectedStorageIssue,Reason
+1,false,Service startup only
+2,false,Disk check passed
+3,true,Volume nearly full
+4,true,ENOSPC write failure
+5,false,Unrelated login
+6,true,Explicit no-space error
+7,false,Quota policy update only
+8,true,Tablespace storage exhaustion
+9,false,Cache cleared
+10,true,Backup target full
+11,false,Database timeout
+12,false,Disk-space report only
