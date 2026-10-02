@@ -1,0 +1,5 @@
+Proposed PowerShell command:
+
+    git fetch --all --prune
+
+Reason given: find out whether this branch is behind the one everyone else is working on.

@@ -1,0 +1,7 @@
+Proposed PowerShell command:
+
+    Get-ChildItem -Path . -Recurse -File |
+        Select-String -Pattern 'TODO' |
+        Select-Object -First 20
+
+Reason given: list unfinished work visible in the source tree, showing no more than twenty matches.

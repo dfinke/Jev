@@ -1,0 +1,6 @@
+Proposed PowerShell commands:
+
+    Remove-Item build -Recurse -Force
+    git clean -fdx
+
+Reason given: start the build again from nothing because the last one left files behind that could not be explained.
