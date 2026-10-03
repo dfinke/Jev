@@ -67,7 +67,7 @@ $question = New-JevQuestion -Name pageOnCall -Type Noul `
 
 ## Current status
 
-The `0.3.1` preview adds `Select-Jev` and `Add-JevAnnotation` for composing semantic selection and annotation in PowerShell pipelines, and fixes positional question and threshold arguments for `Test-Jev`. Runnable examples are available under `Examples/Pipelines` and `Examples/Demos`. The API and examples may continue to evolve as Jev develops.
+The `0.4.0` preview adds `Get-JevRanking` for semantic ranking, `Find-Jev` for comparative search, and `Add-JevTag` for applying multiple labels to each input. Combine these with `Select-Jev` and `Add-JevAnnotation` in PowerShell pipelines. Runnable examples are available under `Examples/Pipelines` and `Examples/Demos`. The API and examples may continue to evolve as Jev develops.
 
 ## Planned usage
 
@@ -125,6 +125,55 @@ Here `$kind` and `$urgency` are named Choice and Score questions.
 `Select-Jev` defaults to a `0.5` threshold; add `-Threshold 0.8` to require a
 higher yes probability. Each input to either command makes one request.
 See [Jev pipelines](Examples/Pipelines/README.md) for the complete runnable example.
+
+For semantic ranking, `Get-JevRanking` asks the same yes/no question of each input
+and returns the original inputs in descending yes-probability order:
+
+```powershell
+$messages | Get-JevRanking 'Does this need urgent attention?' -Top 3
+```
+
+Exact ties keep input order. Each input makes one request, and `-Top` only
+limits the output. Results are buffered until input ends. To sort an answer
+you already obtained, use `Sort-Object` on that property instead.
+See [Rank replies](Examples/Pipelines/RankReplies.ps1) for a runnable example.
+
+To compare candidates together and find the one that best answers a question:
+
+```powershell
+Get-Content ./Examples/Pipelines/checkout.log |
+    Find-Jev 'Which entry best explains why customers cannot complete checkout?'
+```
+
+`Find-Jev` makes one Choice request for up to 254 candidates and returns the
+original selected string or object. It returns nothing when Jev selects
+"none fits"; empty input makes no request. It buffers finite input and does
+not apply a confidence cutoff. Request failures remain errors.
+
+See [Find the checkout cause](Examples/Pipelines/FindCheckoutCause.ps1) for
+the complete runnable example. `Get-JevRanking` judges inputs independently;
+`Find-Jev` lets Jev compare them together.
+
+When several labels can apply, use `Add-JevTag`:
+
+```powershell
+$tags = [ordered]@{
+    billing = 'A current charge, invoice, payment, or refund problem.'
+    account_access = 'A current problem signing in or resetting a password.'
+    urgent = 'An unresolved problem with an explicit deadline today.'
+}
+
+'I was charged twice and cannot sign in. Our event starts tonight.' |
+    Add-JevTag $tags -Threshold 0.8 |
+    Select-Object State, Tags
+```
+
+Each label is an independent Noul question; several labels or none may match.
+All labels share one request per input. The default threshold is `0.5`.
+Results include a `Tags` string array, individual probabilities, and full
+answers alongside the input properties. Collisions receive `Jev_` prefixes.
+An absent tag missed the cutoff, which can include uncertain answers.
+See [Tag an inbox](Examples/Pipelines/TagInbox.ps1) for a complete demo.
 
 ```powershell
 Invoke-Jev -State $feedback -Question $questions -AsJson

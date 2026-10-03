@@ -18,9 +18,12 @@ Register-JevTypeData
 
 Export-ModuleMember -Function @(
     'Add-JevAnnotation'
+    'Add-JevTag'
     'Invoke-Jev'
     'New-JevQuestion'
     'New-JevYesNoQuestion'
     'Select-Jev'
+    'Get-JevRanking'
+    'Find-Jev'
     'Test-Jev'
 )

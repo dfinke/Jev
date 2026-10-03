@@ -49,33 +49,6 @@ function Test-Jev {
 
     process {
         $response = Invoke-Jev -State $State -Question $jevQuestion -Raw
-        $answersProperty = $response.PSObject.Properties['answers']
-
-        if ($null -eq $answersProperty) {
-            throw "Jev did not return answers for question 'answer'."
-        }
-
-        $answers = $answersProperty.Value
-        $answer = if ($answers -is [System.Collections.IDictionary]) {
-            $answers['answer']
-        }
-        else {
-            $answerProperty = $answers.PSObject.Properties['answer']
-            if ($null -ne $answerProperty) { $answerProperty.Value }
-        }
-
-        if ($answer -is [System.Collections.IDictionary]) {
-            $probability = $answer['noul']
-        }
-        else {
-            $probabilityProperty = if ($null -ne $answer) { $answer.PSObject.Properties['noul'] }
-            $probability = if ($null -ne $probabilityProperty) { $probabilityProperty.Value }
-        }
-
-        if ($null -eq $probability) {
-            throw "Jev did not return a Noul answer for question 'answer'."
-        }
-
-        [double] $probability -ge $Threshold
+        (Get-JevNoulProbability -Response $response -Name answer) -ge $Threshold
     }
 }
