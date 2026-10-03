@@ -20,7 +20,9 @@ Describe 'Jev module' {
         $commands | Should -Contain 'Get-JevRanking'
         $commands | Should -Contain 'Find-Jev'
         $commands | Should -Contain 'Add-JevTag'
-        $commands.Count | Should -Be 9
+        $commands | Should -Contain 'Get-JevChoice'
+        $commands | Should -Contain 'Get-JevScore'
+        $commands.Count | Should -Be 11
     }
 
     It 'imports without command-name warnings' {

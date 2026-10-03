@@ -11,6 +11,8 @@ this checkout, so you can try changes directly from a development branch.
 | [Prioritize an inbox](PrioritizeInbox.ps1) | Filter, rank, and annotate messages in one pipeline to build a prioritized worklist. |
 | [Find the checkout cause](FindCheckoutCause.ps1) | Compare sixteen log lines together and select the one that best explains a checkout failure. |
 | [Tag an inbox](TagInbox.ps1) | Apply six overlapping tags to eighteen messages, then count tags and surface urgent messages with multiple issues. |
+| [Route requests](RouteRequests.ps1) | Choose one team with compact arguments, then use switch to select a queue for eight requests. |
+| [Score requests](ScoreRequests.ps1) | Rate twelve messages on an urgency scale, then sort the scored messages with PowerShell. |
 
 ## Reply triage
 
@@ -259,3 +261,127 @@ $results | Where-Object { $_.Tags -contains 'urgent' -and $_.Tags.Count -gt 1 } 
 To inspect an uncertain result, look at its individual probabilities or full
 `answers` property. Tagging and Choice answer different questions: use Choice
 when exactly one label is needed, and tags when several can be true together.
+
+## Route requests
+
+Jev picks a team from the labels you supply. PowerShell maps that team to a
+queue. Run:
+
+```powershell
+./Examples/Pipelines/RouteRequests.ps1
+```
+
+The compact call uses separate trailing arguments, with no commas:
+
+```powershell
+$team = $request |
+    Get-JevChoice 'Which team owns this request?' billing shipping account other
+
+$queue = switch ($team) {
+    billing  { 'payments' }
+    shipping { 'logistics' }
+    account  { 'identity' }
+    other    { 'triage' }
+}
+```
+
+The script contains eight requests spanning duplicate charges, a delayed order,
+broken account access, and requests outside those three teams. It prints a
+routing worklist without changing any external system.
+
+Illustrative output; live choices can vary:
+
+```text
+Id     Team     Queue     Message
+--     ----     -----     -------
+REQ-01 billing  payments  I was charged twice. Please refund the duplicate payment.
+REQ-02 shipping logistics My order has not arrived and tracking has not changed in a week.
+REQ-03 account  identity  I cannot sign in and every password reset link has expired.
+REQ-04 other    triage    Could you consider adding dark mode in a future release?
+```
+
+Each request makes one Choice call and returns one label as a string. This
+differs from tagging, where several independent labels may apply. The command
+accepts one to 255 unique labels and uses each label as its description. Quote
+multi-word labels, such as `'account access'`. Named array input is also supported:
+
+```powershell
+$request | Get-JevChoice -Question 'Which team owns this request?' `
+    -Choices @('billing', 'shipping', 'account', 'other')
+```
+
+No confidence threshold or automatic fallback is applied. Include an `other`
+or `unclear` option when useful. API failures, missing answers, and unknown
+labels remain errors. Use a full Choice question with `Invoke-Jev` when you need
+criterion descriptions, probabilities, or confidence details.
+
+## Score requests
+
+Define an ordered urgency scale, let Jev score each message, and use PowerShell
+to label and sort the results. Capture the returned objects as an array:
+
+```powershell
+$results = @(./Examples/Pipelines/ScoreRequests.ps1)
+$results | Format-Table Urgency, UrgencyLabel, Message -Wrap
+```
+
+The compact call uses quoted level descriptions as trailing arguments:
+
+```powershell
+$message |
+    Get-JevScore 'How urgent is this?' 'Can wait' 'Needs attention soon' 'Needs attention now'
+```
+
+The levels map to `0`, `1`, and `2` in that order. Jev's score can fall between
+levels, so `1.9` is near "Needs attention now". This is a weighted rating on
+your scale, not a yes probability or confidence percentage.
+
+The script adds a label alongside each score and message, then sorts locally:
+
+```powershell
+$scored = foreach ($message in $messages) {
+    $urgency = $message |
+        Get-JevScore 'How urgent is this?' 'Can wait' 'Needs attention soon' 'Needs attention now'
+
+    [pscustomobject]@{
+        Urgency = $urgency
+        UrgencyLabel = switch ($urgency) {
+            { $_ -ge 1.5 } { 'Needs attention now'; break }
+            { $_ -ge 0.5 } { 'Needs attention soon'; break }
+            default        { 'Can wait' }
+        }
+        Message = $message
+    }
+}
+
+$scored | Sort-Object Urgency -Descending
+```
+
+The twelve messages include an outage, an event deadline, a workaround, routine
+questions, and a resolved issue. Each makes one request; sorting makes none.
+The `UrgencyLabel` property names the nearest level: scores below `0.5`
+show "Can wait", scores from `0.5` to below `1.5` show "Needs attention soon",
+and scores from `1.5` show "Needs attention now". These are display cutoffs you
+can change; the original numeric scores still determine the sorting order.
+The script returns objects with `Urgency`, `UrgencyLabel`, and `Message`
+properties. Formatting is up to the caller. For example, use the saved array
+to build a worklist without additional Jev calls:
+
+```powershell
+$results | Where-Object UrgencyLabel -eq 'Needs attention now'
+$results | Export-Csv ./scored-requests.csv -NoTypeInformation
+```
+
+Unlike `Get-JevRanking`, this command exposes the numeric rating and lets you
+define a multi-level rubric. It does not sort, round, or filter the scores.
+
+The command accepts two to ten non-empty level descriptions. For named input:
+
+```powershell
+Get-JevScore -State $message -Question 'How urgent is this?' `
+    -Levels @('Can wait', 'Needs attention soon', 'Needs attention now')
+```
+
+It returns a Double per input, in input order. Missing, invalid, or out-of-range
+scores and request failures remain errors. Use a full Score question with
+`Invoke-Jev` when you need confidence and probability distributions.

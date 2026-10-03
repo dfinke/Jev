@@ -80,20 +80,7 @@ function Find-Jev {
             -Criteria $criteria
 
         $response = Invoke-Jev -State $Question -Question $jevQuestion -Raw -ErrorAction Stop
-        $responseFields = ConvertTo-JevDictionary -Value $response
-        if (-not $responseFields.ContainsKey('answers') -or $null -eq $responseFields['answers']) {
-            throw "Jev did not return answers for question 'match'."
-        }
-        $answers = ConvertTo-JevDictionary -Value $responseFields['answers']
-        if (-not $answers.ContainsKey('match') -or $null -eq $answers['match']) {
-            throw "Jev did not return a Choice answer for question 'match'."
-        }
-        $answer = ConvertTo-JevDictionary -Value $answers['match']
-        if (-not $answer.ContainsKey('choice') -or [string]::IsNullOrWhiteSpace([string] $answer['choice'])) {
-            throw "Jev did not return a Choice answer for question 'match'."
-        }
-
-        $selected = [string] $answer['choice']
+        $selected = Get-JevChoiceAnswer -Response $response -Name match
         if ($selected -eq 'none') { return }
         if (-not $originalByLabel.ContainsKey($selected)) {
             throw "Jev returned an unknown candidate: '$selected'."

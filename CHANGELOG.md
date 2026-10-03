@@ -9,6 +9,10 @@ All notable changes to Jev are documented here.
 - `Get-JevRanking` for semantic ranking by yes probability, returning original inputs with stable ties and an optional `-Top` limit.
 - `Find-Jev` to compare up to 254 candidates in one Choice request and return the best original input, or nothing when none fits.
 - `Add-JevTag` to evaluate independent labels in one request per input and add a thresholded `Tags` array alongside probabilities and response details.
+- `Get-JevChoice` to return one label per input, accepting choices as separate trailing arguments without commas.
+- `Get-JevScore` to return a weighted numeric score per input on two to ten ordered levels, accepting level descriptions as separate trailing arguments.
+- `Examples/Pipelines/ScoreRequests.ps1` to score twelve customer messages and sort them by urgency using PowerShell.
+- `Examples/Pipelines/RouteRequests.ps1` to classify eight requests and map each selected team to a queue with a PowerShell `switch`.
 - `Examples/Pipelines/TagInbox.ps1` with eighteen sample messages, six overlapping tags, tag counts, and an urgent-message worklist.
 - `Examples/Pipelines/FindCheckoutCause.ps1` and a sixteen-line checkout log showing a likely cause among symptoms and unrelated errors.
 - A six-message ranking example in `Examples/Pipelines/RankReplies.ps1`.

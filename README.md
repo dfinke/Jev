@@ -67,7 +67,7 @@ $question = New-JevQuestion -Name pageOnCall -Type Noul `
 
 ## Current status
 
-The `0.4.0` preview adds `Get-JevRanking` for semantic ranking, `Find-Jev` for comparative search, and `Add-JevTag` for applying multiple labels to each input. Combine these with `Select-Jev` and `Add-JevAnnotation` in PowerShell pipelines. Runnable examples are available under `Examples/Pipelines` and `Examples/Demos`. The API and examples may continue to evolve as Jev develops.
+The `0.4.0` preview adds ranking, comparative search, multi-label tagging, and compact `Get-JevChoice` and `Get-JevScore` commands. Combine these with `Select-Jev` and `Add-JevAnnotation` in PowerShell pipelines. Runnable examples are available under `Examples/Pipelines` and `Examples/Demos`. The API and examples may continue to evolve as Jev develops.
 
 ## Planned usage
 
@@ -174,6 +174,41 @@ Results include a `Tags` string array, individual probabilities, and full
 answers alongside the input properties. Collisions receive `Jev_` prefixes.
 An absent tag missed the cutoff, which can include uncertain answers.
 See [Tag an inbox](Examples/Pipelines/TagInbox.ps1) for a complete demo.
+
+To choose one label, write the choices directly after the question:
+
+```powershell
+$team = 'I was charged twice. Please refund the duplicate.' |
+    Get-JevChoice 'Which team owns this request?' billing shipping account other
+
+switch ($team) {
+    billing  { 'payments' }
+    shipping { 'logistics' }
+    account  { 'identity' }
+    other    { 'triage' }
+}
+```
+
+`Get-JevChoice` returns one string per input and makes one request per input.
+It accepts up to 255 unique labels; quote multi-word choices. Each label is
+also its criterion description. The command has no confidence cutoff or
+automatic fallback: include `other` or `unclear` when appropriate. Use
+`Invoke-Jev` with a Choice question for custom descriptions or full answers.
+See [Route requests](Examples/Pipelines/RouteRequests.ps1) for a runnable demo.
+
+To rate an input on an ordered scale, supply the levels after the question:
+
+```powershell
+'Our event starts in two hours and tickets will not download.' |
+    Get-JevScore 'How urgent is this?' 'Can wait' 'Needs attention soon' 'Needs attention now'
+```
+
+`Get-JevScore` returns one numeric score per input and makes one request per
+input. Supply two to ten level descriptions in scale order. Indexes start at
+zero: three levels give a scale from `0` to `2`. The weighted score can fall
+between levels; it is not a yes probability or confidence. Use `Invoke-Jev`
+with a Score question for the full answer. See
+[Score requests](Examples/Pipelines/ScoreRequests.ps1) for a sorting demo.
 
 ```powershell
 Invoke-Jev -State $feedback -Question $questions -AsJson

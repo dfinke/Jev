@@ -24,6 +24,8 @@ Export-ModuleMember -Function @(
     'New-JevYesNoQuestion'
     'Select-Jev'
     'Get-JevRanking'
+    'Get-JevChoice'
+    'Get-JevScore'
     'Find-Jev'
     'Test-Jev'
 )
