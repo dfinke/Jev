@@ -11,6 +11,7 @@ Each demo is a small, runnable example of using Jev from PowerShell. These Power
 | 03 | [Grep for meaning](03-grep-for-meaning/README.md) | Keep issue reports by meaning rather than exact words. |
 | 15 | [Find the line](15-find-the-line/README.md) | Choose the best matching line from a bounded document in one call. |
 | PS | [Inline refund check](Inline-Refund-Check/README.md) | Use the pipeline-friendly `Test-Jev` command to return a Boolean. |
+| PS | [Test a review stream](Pipelines/TestReviewStream.ps1) | Keep each review beside its Boolean complaint judgment as reusable PowerShell objects. |
 
 ## Gates and workflows
 
@@ -19,6 +20,7 @@ Each demo is a small, runnable example of using Jev from PowerShell. These Power
 | 16 | [Triage a support queue](16-triage-pipeline/README.md) | Ask several focused questions per ticket and apply a PowerShell policy. |
 | 19 | [Fail closed on a proposed command](19-no-or-could-not-ask/README.md) | Hold a proposal when the answer is no, uncertain, or unavailable. |
 | 21 | [Choose the next action from the record](21-options-from-the-record/README.md) | Let each workflow step supply its own set of possible actions. |
+| PS | [Loan approval](Loan-Approval/README.md) | Read applications from CSV, create validated objects, and evaluate an editable Markdown policy. |
 
 ## Search, ranking, and cost
 
