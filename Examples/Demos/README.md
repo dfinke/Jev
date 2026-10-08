@@ -12,6 +12,7 @@ Each demo is a small, runnable example of using Jev from PowerShell. These Power
 | 15 | [Find the line](15-find-the-line/README.md) | Choose the best matching line from a bounded document in one call. |
 | PS | [Inline refund check](Inline-Refund-Check/README.md) | Use the pipeline-friendly `Test-Jev` command to return a Boolean. |
 | PS | [Test a review stream](Pipelines/TestReviewStream.ps1) | Keep each review beside its Boolean complaint judgment as reusable PowerShell objects. |
+| PS | [Developer quick hits](Quick-Hits/README.md) | Four short command-line demos for finding, ranking, selecting, and routing developer issues. |
 
 ## Gates and workflows
 

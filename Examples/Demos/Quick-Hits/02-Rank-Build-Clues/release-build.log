@@ -1,0 +1,12 @@
+09:42:01 INFO  Release job started for version 4.8.0
+09:42:06 INFO  Source archive downloaded from the internal package feed
+09:42:10 INFO  Dependency cache restored from yesterday's successful run
+09:42:19 WARN  Two projects use different versions of Contoso.Contracts
+09:42:31 INFO  1,204 files scanned; no formatting changes required
+09:42:44 ERROR CS1705: Orders.Core references Contracts 7.2 but 7.1 was resolved
+09:42:45 INFO  Payments.Core compiled successfully
+09:42:49 ERROR Release bundle was not created because Orders.Core did not compile
+09:42:53 INFO  Documentation link checker found one external URL unavailable
+09:43:02 WARN  Signing service response took 1.8 seconds
+09:43:07 INFO  Build agent disk has 18 GB available
+09:43:11 ERROR Release job exited with code 1

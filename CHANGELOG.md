@@ -17,6 +17,8 @@ All notable changes to Jev are documented here.
 - `Examples/Pipelines/FindCheckoutCause.ps1` and a sixteen-line checkout log showing a likely cause among symptoms and unrelated errors.
 - A six-message ranking example in `Examples/Pipelines/RankReplies.ps1`.
 - `Examples/Pipelines/PrioritizeInbox.ps1` to select messages needing a reply, rank the top three, and annotate the responsible team in one pipeline.
+- Developer quick hits for finding and ranking build-log clues, selecting user-visible test failures, and routing test failures to a component.
+- A loan approval walkthrough with CSV input, PowerShell-calculated percentages, and a human-editable Markdown policy, plus a review-stream example that returns reusable objects.
 
 ## [0.3.1] - 2026-10-03
 
