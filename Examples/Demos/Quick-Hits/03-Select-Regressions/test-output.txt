@@ -1,0 +1,12 @@
+PASS CheckoutTests.GuestCanOpenCart
+PASS AccountTests.PasswordResetEmailUsesConfiguredSender
+WARN Test host is using the in-memory message broker
+FAIL CheckoutTests.SubmitOrderReturnsSuccessButNoOrderAppearsInHistory
+INFO Retry 2 of 3 after response from inventory service took 4.2 seconds
+FAIL AccountTests.ValidSessionIsRejectedAfterTokenRefresh
+PASS SearchTests.EmptyQueryShowsRecentItems
+FAIL InvoiceTests.DisplayedTotalDoesNotMatchTheAmountSentForPayment
+WARN Snapshot differs only in a generated timestamp field
+FAIL UploadTests.AcceptedImageCannotBeOpenedFromTheCustomerDownloadLink
+INFO Cleanup removed 3 temporary test accounts
+PASS HealthEndpointTests.ReadinessCheckIncludesDatabaseStatus

@@ -1,0 +1,16 @@
+2026-10-03T09:00:00Z INFO  deploy: checkout-api v2.8.0 started; health check passed.
+2026-10-03T09:00:03Z INFO  catalog: product prices refreshed successfully.
+2026-10-03T09:00:07Z WARN  images: thumbnail request returned 404; placeholder displayed.
+2026-10-03T09:00:11Z INFO  database: connection established; order database is ready.
+2026-10-03T09:00:15Z INFO  inventory: stock reserved for order A-1043.
+2026-10-03T09:00:16Z ERROR payments: authorization rejected with HTTP 401; configured API key expired at 09:00:00Z. All payment attempts are being rejected.
+2026-10-03T09:00:17Z ERROR checkout: order A-1043 could not complete because payment authorization failed.
+2026-10-03T09:00:18Z WARN  email: promotional newsletter delivery delayed; retry scheduled.
+2026-10-03T09:00:22Z INFO  shipping: delivery quote calculated successfully for order A-1044.
+2026-10-03T09:00:24Z ERROR checkout: order A-1044 could not complete because payment authorization failed.
+2026-10-03T09:00:28Z WARN  cache: product lookup missed cache; database fallback succeeded.
+2026-10-03T09:00:31Z INFO  health: checkout-api is responding; process CPU is 12 percent.
+2026-10-03T09:00:34Z ERROR reports: yesterday's sales export is locked by another process; checkout does not use this export.
+2026-10-03T09:00:40Z WARN  checkout: failed-order count is increasing; customers are abandoning carts.
+2026-10-03T09:00:43Z INFO  database: write latency is 8 ms; no connection errors.
+2026-10-03T09:00:47Z ERROR checkout: order A-1045 could not complete because payment authorization failed.

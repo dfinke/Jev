@@ -17,7 +17,19 @@ Describe 'Jev module' {
         $commands | Should -Contain 'Test-Jev'
         $commands | Should -Contain 'Select-Jev'
         $commands | Should -Contain 'Add-JevAnnotation'
-        $commands.Count | Should -Be 6
+        $commands | Should -Contain 'Get-JevRanking'
+        $commands | Should -Contain 'Find-Jev'
+        $commands | Should -Contain 'Add-JevTag'
+        $commands | Should -Contain 'Get-JevChoice'
+        $commands | Should -Contain 'Get-JevScore'
+        $commands.Count | Should -Be 11
+    }
+
+    It 'imports without command-name warnings' {
+        $importWarnings = @()
+        Import-Module $modulePath -Force -WarningVariable importWarnings
+
+        $importWarnings.Count | Should -Be 0
     }
 
     It 'uses State as the canonical input parameter with a legacy alias' {

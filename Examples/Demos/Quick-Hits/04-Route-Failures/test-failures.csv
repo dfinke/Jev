@@ -1,0 +1,9 @@
+Id,Message
+T-104,"Requests intermittently receive a gateway 503 although the service readiness check remains green."
+T-117,"The browser completes sign-in, then loops back to the login page after the session refresh redirect."
+T-123,"The order endpoint reports success, but the order row is missing after the transaction retries."
+T-131,"Clean Linux agents fail to package a generated file whose path differs only by letter casing."
+T-142,"The token works for the first page of results; the next page is rejected after the signing key rotates."
+T-156,"A burst of parallel calls receives 429 responses while the same requests pass when run individually."
+T-163,"The invoice worker marks its job complete, but a later read returns the previous committed total."
+T-174,"Compilation succeeds on developer machines, while hosted agents cannot resolve a generated source file."

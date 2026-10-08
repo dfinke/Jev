@@ -1,0 +1,110 @@
+[
+  {
+    "Id": "MAIL-01",
+    "Sender": "Maya Chen",
+    "Subject": "Double charge and locked out before tonight's event",
+    "Message": "You charged us twice for the event plan. I also cannot sign in: the password reset link says it has expired. Our event starts tonight and I need both problems fixed before guests arrive."
+  },
+  {
+    "Id": "MAIL-02",
+    "Sender": "Jordan Lee",
+    "Subject": "Everything works now, thank you",
+    "Message": "The update fixed our export problem. Everything works now. Thanks for sticking with us and explaining the solution so clearly."
+  },
+  {
+    "Id": "MAIL-03",
+    "Sender": "Alex Morgan",
+    "Subject": "Do you ship to Canada?",
+    "Message": "We are comparing suppliers for next quarter. Do you ship your starter kit to Canada, and can you send a brochure? We have not placed an order yet."
+  },
+  {
+    "Id": "MAIL-04",
+    "Sender": "Sam Rivera",
+    "Subject": "Delivered on paper, missing before tonight's launch",
+    "Message": "Tracking says our demo kit was delivered, but reception has not received anything. The launch is tonight and we cannot run it without the kit. Please locate the shipment today."
+  },
+  {
+    "Id": "MAIL-05",
+    "Sender": "Taylor Brooks",
+    "Subject": "CSV export crashes with large reports",
+    "Message": "The CSV export closes the application whenever the report has more than 500 rows. Smaller reports work. We can use smaller files for now; our next reporting cycle is next month."
+  },
+  {
+    "Id": "MAIL-06",
+    "Sender": "Priya Shah",
+    "Subject": "Incorrect tax on invoice, approval closes today",
+    "Message": "Invoice INV-204 includes tax even though our exemption certificate is on file. Finance needs a corrected invoice before the payment approval window closes at 3 pm today."
+  },
+  {
+    "Id": "MAIL-07",
+    "Sender": "Casey Wilson",
+    "Subject": "Password reset links expire immediately",
+    "Message": "I cannot sign in. Every new reset link says expired as soon as I open it. I have tried two browsers. There is no deadline, but please help me regain access."
+  },
+  {
+    "Id": "MAIL-08",
+    "Sender": "Riley Park",
+    "Subject": "Replacement never arrived, but we were charged",
+    "Message": "The replacement adapter promised last week has not arrived. Our statement also shows a new charge even though the replacement was supposed to be free. Please check both the shipment and the charge."
+  },
+  {
+    "Id": "MAIL-09",
+    "Sender": "Morgan Patel",
+    "Subject": "Feature suggestion: dark mode",
+    "Message": "Could you consider adding dark mode in a future release? Nothing is broken; it would simply be a useful option when I work in the evening."
+  },
+  {
+    "Id": "MAIL-10",
+    "Sender": "Avery James",
+    "Subject": "Nobody can sign in after the update",
+    "Message": "Since this morning's update, all 60 staff get an error after entering their credentials. Nobody can access their accounts. We have a customer training session in one hour."
+  },
+  {
+    "Id": "MAIL-11",
+    "Sender": "Jamie Foster",
+    "Subject": "Thanks for sorting out the invoice",
+    "Message": "The corrected invoice arrived and the duplicate charge has been refunded. There is no outstanding problem. Your billing team made the whole process painless. Thank you!"
+  },
+  {
+    "Id": "MAIL-12",
+    "Sender": "Drew Ellis",
+    "Subject": "Still billed after cancellation",
+    "Message": "We cancelled the subscription last month and received confirmation, but another renewal charge appeared yesterday. Please reverse it and confirm that future billing has stopped."
+  },
+  {
+    "Id": "MAIL-13",
+    "Sender": "Robin Kim",
+    "Subject": "Demo kit damaged, webcast starts in two hours",
+    "Message": "The courier delivered the kit with a crushed box and a cracked screen. Our webcast starts in two hours. Can you arrange a usable replacement or another way to run the demo?"
+  },
+  {
+    "Id": "MAIL-14",
+    "Sender": "Quinn Adams",
+    "Subject": "Saved filters disappear when reopening a report",
+    "Message": "Saving a report does not preserve its filters. Every time we reopen it, all filters are gone. We can reapply them manually, but the saved-report feature is not working correctly."
+  },
+  {
+    "Id": "MAIL-15",
+    "Sender": "Cameron Ross",
+    "Subject": "Question about annual pricing",
+    "Message": "How does annual pricing compare with monthly pricing for ten users? We are considering buying later this year. There are no charges or invoices to investigate."
+  },
+  {
+    "Id": "MAIL-16",
+    "Sender": "Blair Nguyen",
+    "Subject": "Charged twice and account recovery is broken",
+    "Message": "The renewal charged my card twice. Separately, the account recovery page crashes when I submit my email, so I cannot reset my password or sign in. Please investigate both issues; there is no immediate deadline."
+  },
+  {
+    "Id": "MAIL-17",
+    "Sender": "Skyler Reed",
+    "Subject": "Replacement arrived and works perfectly",
+    "Message": "The replacement arrived yesterday, everything is intact, and it works perfectly. No further action needed. Thanks for the fast delivery and friendly support!"
+  },
+  {
+    "Id": "MAIL-18",
+    "Sender": "Emerson Lane",
+    "Subject": "Upload fails, client report due at 4 pm",
+    "Message": "Uploading attachments from the mobile app fails with a server error. The same files upload from a desktop. I need to submit the client's report from the field by 4 pm today."
+  }
+]

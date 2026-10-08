@@ -1,0 +1,12 @@
+2026-10-06 09:14:02 INFO  Agent image windows-2022 started
+2026-10-06 09:14:08 INFO  Repository checked out at commit 8c4a12d
+2026-10-06 09:14:14 INFO  NuGet restore completed for 14 projects
+2026-10-06 09:14:28 INFO  312 source files passed formatting checks
+2026-10-06 09:14:41 WARN  Test host restarted after a worker exceeded its memory limit
+2026-10-06 09:14:52 INFO  Unit test project compiled successfully
+2026-10-06 09:15:03 ERROR Integration tests could not connect to orders-db.internal:5432
+2026-10-06 09:15:03 WARN  Connection string resolved to the fallback test environment
+2026-10-06 09:15:04 ERROR OrderRepositoryTests.CreateOrder failed before sending a query
+2026-10-06 09:15:04 INFO  186 unit tests passed; 1 integration test failed
+2026-10-06 09:15:05 ERROR Pipeline stopped during the integration test stage
+2026-10-06 09:15:11 INFO  Artifact upload skipped because the test stage did not complete
