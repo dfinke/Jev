@@ -65,6 +65,13 @@ $question = New-JevQuestion -Name pageOnCall -Type Noul `
     }
 ```
 
+## Tutorial
+
+Follow the [Jev in PowerShell tutorial](Tutorial/README.md) to move from a
+plain-language question to filtering, ranking, annotation, and a guarded
+PowerShell workflow. It uses one small support inbox throughout, so you can
+run the snippets in order or use them as a livestream demo.
+
 ## Current status
 
 The `0.4.0` preview adds ranking, comparative search, multi-label tagging, and compact `Get-JevChoice` and `Get-JevScore` commands. Combine these with `Select-Jev` and `Add-JevAnnotation` in PowerShell pipelines. Runnable examples are available under `Examples/Pipelines` and `Examples/Demos`. The API and examples may continue to evolve as Jev develops.

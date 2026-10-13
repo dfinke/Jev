@@ -1,0 +1,37 @@
+[
+  {
+    "Title": "Safari export blocked",
+    "Preview": "Board meeting Thursday; half the team cannot export.",
+    "Text": "Export to CSV has been broken since Friday.\nIt works in Chrome, but half our team is on Safari and they can't pull reports at all.\nWe have a board meeting Thursday."
+  },
+  {
+    "Title": "Reproducible export defect",
+    "Preview": "Every Safari export fails with a consistent error.",
+    "Text": "CSV export fails every time in Safari 18. The Download button returns error 500. Chrome works. I can reproduce it with any report."
+  },
+  {
+    "Title": "Duplicate renewal charge",
+    "Preview": "Customer asks for a refund after two charges.",
+    "Text": "Our account was charged twice for the annual renewal. Please refund the duplicate charge before our finance review tomorrow."
+  },
+  {
+    "Title": "Checkout outage",
+    "Preview": "Multiple customers cannot complete purchases.",
+    "Text": "Checkout has returned HTTP 503 for the last 20 minutes. Customers cannot place orders, and we are losing sales right now."
+  },
+  {
+    "Title": "Quarterly report help",
+    "Preview": "Account needs guidance on exporting a report.",
+    "Text": "Could someone show us the best way to export the quarterly report? We are preparing for our customer review next month."
+  },
+  {
+    "Title": "Automated export notice",
+    "Preview": "Machine-generated status email says the nightly export passed.",
+    "Text": "AUTOMATED REPORT: Nightly CSV export completed successfully at 02:14 UTC. No errors detected."
+  },
+  {
+    "Title": "Unclear follow-up",
+    "Preview": "The customer says it is broken again without details.",
+    "Text": "It is broken again. Can someone take a look? We need this sorted soon."
+  }
+]

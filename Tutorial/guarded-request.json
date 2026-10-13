@@ -1,0 +1,44 @@
+{
+  "requests": [
+    {
+      "requester": "On-call engineer",
+      "service": "Checkout",
+      "environment": "Production",
+      "request": "Check whether checkout is responding to health probes.",
+      "impact": "Customers report slow page loads, but purchases are still succeeding.",
+      "approvalRecorded": false
+    },
+    {
+      "requester": "On-call engineer",
+      "service": "Checkout",
+      "environment": "Production",
+      "request": "Restart the checkout service.",
+      "impact": "Customers cannot place orders while the service is unavailable.",
+      "approvalRecorded": false
+    },
+    {
+      "requester": "Release engineer",
+      "service": "Checkout",
+      "environment": "Staging",
+      "request": "Restart checkout after the deployment smoke test.",
+      "impact": "The staging test is blocked until the service restarts.",
+      "approvalRecorded": false
+    },
+    {
+      "requester": "Database operator",
+      "service": "Orders database",
+      "environment": "Production",
+      "request": "Delete the old orders database to free space.",
+      "impact": "The database contains customer order history.",
+      "approvalRecorded": true
+    },
+    {
+      "requester": "Support engineer",
+      "service": "Checkout",
+      "environment": "Production",
+      "request": "Checkout is acting strange again. Can you take a look?",
+      "impact": "No specific error or requested operation was provided.",
+      "approvalRecorded": false
+    }
+  ]
+}
