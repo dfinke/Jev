@@ -34,6 +34,7 @@ $robocopyArguments = @(
     '.vscode'
     'Examples'
     'Tests'
+    'brag-work-20261009'
     '/XF'
     'InstallModule.ps1'
     'PublishToGallery.ps1'
