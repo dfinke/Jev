@@ -39,6 +39,10 @@ $messages = Get-Content ./Tutorial/messages.txt
 The sample file contains eight short requests: some need action, some need a
 reply, and some are routine. Keep it open while you work through the examples.
 
+For a live demonstration of messages flowing into Jev-selected queues, see
+[Live Message Routing](Live-Routing/README.md), including its
+[WPF dashboard](Live-Routing/Watcher-UI/README.md).
+
 ## 1. Ask one yes-or-no question
 
 Start with one state and one question. `Test-Jev` turns Jev's yes probability
